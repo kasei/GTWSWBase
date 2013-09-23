@@ -9,12 +9,39 @@
 /* Begin PBXBuildFile section */
 		3710918817A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918717A9B8FB00BFAF43 /* Cocoa.framework */; };
 		3710919217A9B8FB00BFAF43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3710919017A9B8FB00BFAF43 /* InfoPlist.strings */; };
-		3710919617A9B8FB00BFAF43 /* GTWSWBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3710919517A9B8FB00BFAF43 /* GTWSWBase.m */; };
 		3710919E17A9B8FB00BFAF43 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */; };
 		3710919F17A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918717A9B8FB00BFAF43 /* Cocoa.framework */; };
 		371091A217A9B8FB00BFAF43 /* GTWSWBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */; };
 		371091A817A9B8FB00BFAF43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 371091A617A9B8FB00BFAF43 /* InfoPlist.strings */; };
 		371091AB17A9B8FB00BFAF43 /* GTWSWBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091AA17A9B8FB00BFAF43 /* GTWSWBaseTests.m */; };
+		371091C417AA8D3500BFAF43 /* GTWBlank.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B417AA8D3400BFAF43 /* GTWBlank.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091C517AA8D3500BFAF43 /* GTWBlank.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B517AA8D3400BFAF43 /* GTWBlank.m */; };
+		371091C617AA8D3500BFAF43 /* GTWBlank.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B517AA8D3400BFAF43 /* GTWBlank.m */; };
+		371091C717AA8D3500BFAF43 /* GTWDataset.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B617AA8D3400BFAF43 /* GTWDataset.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091C817AA8D3500BFAF43 /* GTWDataset.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B717AA8D3400BFAF43 /* GTWDataset.m */; };
+		371091C917AA8D3500BFAF43 /* GTWDataset.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B717AA8D3400BFAF43 /* GTWDataset.m */; };
+		371091CA17AA8D3500BFAF43 /* GTWIRI.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B817AA8D3400BFAF43 /* GTWIRI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091CB17AA8D3500BFAF43 /* GTWIRI.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B917AA8D3400BFAF43 /* GTWIRI.m */; };
+		371091CC17AA8D3500BFAF43 /* GTWIRI.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B917AA8D3400BFAF43 /* GTWIRI.m */; };
+		371091CD17AA8D3500BFAF43 /* GTWLiteral.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091BA17AA8D3400BFAF43 /* GTWLiteral.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091CE17AA8D3500BFAF43 /* GTWLiteral.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BB17AA8D3400BFAF43 /* GTWLiteral.m */; };
+		371091CF17AA8D3500BFAF43 /* GTWLiteral.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BB17AA8D3400BFAF43 /* GTWLiteral.m */; };
+		371091D017AA8D3500BFAF43 /* GTWModelBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091BC17AA8D3400BFAF43 /* GTWModelBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091D117AA8D3500BFAF43 /* GTWModelBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BD17AA8D3400BFAF43 /* GTWModelBase.m */; };
+		371091D217AA8D3500BFAF43 /* GTWModelBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BD17AA8D3400BFAF43 /* GTWModelBase.m */; };
+		371091D317AA8D3500BFAF43 /* GTWQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091BE17AA8D3400BFAF43 /* GTWQuad.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091D417AA8D3500BFAF43 /* GTWQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BF17AA8D3400BFAF43 /* GTWQuad.m */; };
+		371091D517AA8D3500BFAF43 /* GTWQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BF17AA8D3400BFAF43 /* GTWQuad.m */; };
+		371091D617AA8D3500BFAF43 /* GTWTriple.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091C017AA8D3400BFAF43 /* GTWTriple.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091D717AA8D3500BFAF43 /* GTWTriple.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C117AA8D3500BFAF43 /* GTWTriple.m */; };
+		371091D817AA8D3500BFAF43 /* GTWTriple.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C117AA8D3500BFAF43 /* GTWTriple.m */; };
+		371091D917AA8D3500BFAF43 /* GTWVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091C217AA8D3500BFAF43 /* GTWVariable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371091DA17AA8D3500BFAF43 /* GTWVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C317AA8D3500BFAF43 /* GTWVariable.m */; };
+		371091DB17AA8D3500BFAF43 /* GTWVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C317AA8D3500BFAF43 /* GTWVariable.m */; };
+		371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3710919417A9B8FB00BFAF43 /* GTWSWBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37F96DBB17ACF86700235009 /* GTWBlockEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */; };
+		37F96DBC17ACF86700235009 /* GTWBlockEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,14 +63,31 @@
 		3710918F17A9B8FB00BFAF43 /* GTWSWBase-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTWSWBase-Info.plist"; sourceTree = "<group>"; };
 		3710919117A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3710919317A9B8FB00BFAF43 /* GTWSWBase-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTWSWBase-Prefix.pch"; sourceTree = "<group>"; };
-		3710919417A9B8FB00BFAF43 /* GTWSWBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTWSWBase.h; sourceTree = "<group>"; };
-		3710919517A9B8FB00BFAF43 /* GTWSWBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTWSWBase.m; sourceTree = "<group>"; };
+		3710919417A9B8FB00BFAF43 /* GTWSWBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTWSWBase.h; sourceTree = "<group>"; wrapsLines = 1; };
 		3710919C17A9B8FB00BFAF43 /* GTWSWBaseTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GTWSWBaseTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		371091A517A9B8FB00BFAF43 /* GTWSWBaseTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTWSWBaseTests-Info.plist"; sourceTree = "<group>"; };
 		371091A717A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		371091A917A9B8FB00BFAF43 /* GTWSWBaseTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTWSWBaseTests.h; sourceTree = "<group>"; };
 		371091AA17A9B8FB00BFAF43 /* GTWSWBaseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTWSWBaseTests.m; sourceTree = "<group>"; };
+		371091B417AA8D3400BFAF43 /* GTWBlank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWBlank.h; sourceTree = "<group>"; };
+		371091B517AA8D3400BFAF43 /* GTWBlank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWBlank.m; sourceTree = "<group>"; };
+		371091B617AA8D3400BFAF43 /* GTWDataset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWDataset.h; sourceTree = "<group>"; };
+		371091B717AA8D3400BFAF43 /* GTWDataset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWDataset.m; sourceTree = "<group>"; };
+		371091B817AA8D3400BFAF43 /* GTWIRI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWIRI.h; sourceTree = "<group>"; };
+		371091B917AA8D3400BFAF43 /* GTWIRI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWIRI.m; sourceTree = "<group>"; };
+		371091BA17AA8D3400BFAF43 /* GTWLiteral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWLiteral.h; sourceTree = "<group>"; };
+		371091BB17AA8D3400BFAF43 /* GTWLiteral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWLiteral.m; sourceTree = "<group>"; };
+		371091BC17AA8D3400BFAF43 /* GTWModelBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWModelBase.h; sourceTree = "<group>"; };
+		371091BD17AA8D3400BFAF43 /* GTWModelBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWModelBase.m; sourceTree = "<group>"; };
+		371091BE17AA8D3400BFAF43 /* GTWQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWQuad.h; sourceTree = "<group>"; };
+		371091BF17AA8D3400BFAF43 /* GTWQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWQuad.m; sourceTree = "<group>"; };
+		371091C017AA8D3400BFAF43 /* GTWTriple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWTriple.h; sourceTree = "<group>"; };
+		371091C117AA8D3500BFAF43 /* GTWTriple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWTriple.m; sourceTree = "<group>"; };
+		371091C217AA8D3500BFAF43 /* GTWVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWVariable.h; sourceTree = "<group>"; };
+		371091C317AA8D3500BFAF43 /* GTWVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWVariable.m; sourceTree = "<group>"; };
+		37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWBlockEnumerator.h; sourceTree = "<group>"; };
+		37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWBlockEnumerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +155,13 @@
 			isa = PBXGroup;
 			children = (
 				3710919417A9B8FB00BFAF43 /* GTWSWBase.h */,
-				3710919517A9B8FB00BFAF43 /* GTWSWBase.m */,
+				3798F17B17B0FB7600C9A1B6 /* Nodes and Terms */,
+				3798F17C17B0FB8200C9A1B6 /* Statements */,
+				3798F17E17B0FBB700C9A1B6 /* Base Classes */,
+				3798F17D17B0FB8F00C9A1B6 /* Utility Classes */,
 				3710918E17A9B8FB00BFAF43 /* Supporting Files */,
+				371091B617AA8D3400BFAF43 /* GTWDataset.h */,
+				371091B717AA8D3400BFAF43 /* GTWDataset.m */,
 			);
 			path = GTWSWBase;
 			sourceTree = "<group>";
@@ -146,6 +195,50 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3798F17B17B0FB7600C9A1B6 /* Nodes and Terms */ = {
+			isa = PBXGroup;
+			children = (
+				371091B417AA8D3400BFAF43 /* GTWBlank.h */,
+				371091B517AA8D3400BFAF43 /* GTWBlank.m */,
+				371091B817AA8D3400BFAF43 /* GTWIRI.h */,
+				371091B917AA8D3400BFAF43 /* GTWIRI.m */,
+				371091BA17AA8D3400BFAF43 /* GTWLiteral.h */,
+				371091BB17AA8D3400BFAF43 /* GTWLiteral.m */,
+				371091C217AA8D3500BFAF43 /* GTWVariable.h */,
+				371091C317AA8D3500BFAF43 /* GTWVariable.m */,
+			);
+			name = "Nodes and Terms";
+			sourceTree = "<group>";
+		};
+		3798F17C17B0FB8200C9A1B6 /* Statements */ = {
+			isa = PBXGroup;
+			children = (
+				371091BE17AA8D3400BFAF43 /* GTWQuad.h */,
+				371091BF17AA8D3400BFAF43 /* GTWQuad.m */,
+				371091C017AA8D3400BFAF43 /* GTWTriple.h */,
+				371091C117AA8D3500BFAF43 /* GTWTriple.m */,
+			);
+			name = Statements;
+			sourceTree = "<group>";
+		};
+		3798F17D17B0FB8F00C9A1B6 /* Utility Classes */ = {
+			isa = PBXGroup;
+			children = (
+				37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */,
+				37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */,
+			);
+			name = "Utility Classes";
+			sourceTree = "<group>";
+		};
+		3798F17E17B0FBB700C9A1B6 /* Base Classes */ = {
+			isa = PBXGroup;
+			children = (
+				371091BC17AA8D3400BFAF43 /* GTWModelBase.h */,
+				371091BD17AA8D3400BFAF43 /* GTWModelBase.m */,
+			);
+			name = "Base Classes";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -153,6 +246,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */,
+				371091D017AA8D3500BFAF43 /* GTWModelBase.h in Headers */,
+				371091C417AA8D3500BFAF43 /* GTWBlank.h in Headers */,
+				371091C717AA8D3500BFAF43 /* GTWDataset.h in Headers */,
+				371091CA17AA8D3500BFAF43 /* GTWIRI.h in Headers */,
+				371091CD17AA8D3500BFAF43 /* GTWLiteral.h in Headers */,
+				371091D317AA8D3500BFAF43 /* GTWQuad.h in Headers */,
+				37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */,
+				371091D617AA8D3500BFAF43 /* GTWTriple.h in Headers */,
+				371091D917AA8D3500BFAF43 /* GTWVariable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +305,7 @@
 		3710917B17A9B8FB00BFAF43 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Gregory Todd Williams";
 			};
 			buildConfigurationList = 3710917E17A9B8FB00BFAF43 /* Build configuration list for PBXProject "GTWSWBase" */;
@@ -263,7 +366,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3710919617A9B8FB00BFAF43 /* GTWSWBase.m in Sources */,
+				371091C517AA8D3500BFAF43 /* GTWBlank.m in Sources */,
+				371091C817AA8D3500BFAF43 /* GTWDataset.m in Sources */,
+				371091CB17AA8D3500BFAF43 /* GTWIRI.m in Sources */,
+				371091CE17AA8D3500BFAF43 /* GTWLiteral.m in Sources */,
+				371091D117AA8D3500BFAF43 /* GTWModelBase.m in Sources */,
+				371091D417AA8D3500BFAF43 /* GTWQuad.m in Sources */,
+				371091D717AA8D3500BFAF43 /* GTWTriple.m in Sources */,
+				371091DA17AA8D3500BFAF43 /* GTWVariable.m in Sources */,
+				37F96DBB17ACF86700235009 /* GTWBlockEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +383,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				371091AB17A9B8FB00BFAF43 /* GTWSWBaseTests.m in Sources */,
+				371091C617AA8D3500BFAF43 /* GTWBlank.m in Sources */,
+				371091C917AA8D3500BFAF43 /* GTWDataset.m in Sources */,
+				371091CC17AA8D3500BFAF43 /* GTWIRI.m in Sources */,
+				371091CF17AA8D3500BFAF43 /* GTWLiteral.m in Sources */,
+				371091D217AA8D3500BFAF43 /* GTWModelBase.m in Sources */,
+				371091D517AA8D3500BFAF43 /* GTWQuad.m in Sources */,
+				371091D817AA8D3500BFAF43 /* GTWTriple.m in Sources */,
+				371091DB17AA8D3500BFAF43 /* GTWVariable.m in Sources */,
+				37F96DBC17ACF86700235009 /* GTWBlockEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +429,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -342,7 +461,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -439,6 +557,7 @@
 				371091B017A9B8FB00BFAF43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		371091B117A9B8FB00BFAF43 /* Build configuration list for PBXNativeTarget "GTWSWBaseTests" */ = {
 			isa = XCConfigurationList;
@@ -447,6 +566,7 @@
 				371091B317A9B8FB00BFAF43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
