@@ -41,4 +41,8 @@
     return [[self description] hash];
 }
 
+- (NSArray*) allValues {
+    return @[ self.subject, self.predicate, self.object, self.graph ];
+}
+
 @end

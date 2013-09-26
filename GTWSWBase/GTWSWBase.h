@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;
 @property id<GTWTerm> object;
+- (NSArray*) allValues;
 @end
 
 @protocol GTWQuad <GTWTriple>
@@ -177,7 +178,7 @@ typedef NS_ENUM(NSInteger, GTWType) {
 - (void) serializeTriplesAndQuads: (NSEnumerator*) statements toHandle: (NSFileHandle*) handle;
 @end
 
-@protocol GTWSPARQLSerializer <GTWSerializer>
+@protocol GTWSPARQLResultsSerializer <GTWSerializer>
 - (NSData*) dataFromResults: (NSEnumerator*) results withVariables: (NSSet*) variables;
 - (void) serializeResults: (NSEnumerator*) results withVariables: (NSSet*) variables toHandle: (NSFileHandle*) handle;
 @end
@@ -186,3 +187,11 @@ typedef NS_ENUM(NSInteger, GTWType) {
 - (NSData*) dataFromOperations: (NSEnumerator*) ops;
 - (void) serializeOperations: (NSEnumerator*) ops toHandle: (NSFileHandle*) handle;
 @end
+
+@protocol GTWParser <NSObject>
+@end
+
+@protocol GTWSPARQLResultsParser <GTWParser>
+- (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set;
+@end
+
