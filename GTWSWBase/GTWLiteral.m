@@ -138,11 +138,17 @@
 }
 
 - (BOOL) booleanValue {
-    if (!self.datatype)
+//    NSLog(@"testing boolean value of %@", self);
+    if (!self.datatype) {
+//        NSLog(@"-> no datatype");
         return NO;
-    if (![self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#boolean"])
+    } else if (![self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#boolean"]) {
+//        NSLog(@"-> not a boolean datatype");
         return NO;
-    return [self.value isEqualToString:@"true"];
+    } else {
+//        NSLog(@"-> testing if value '%@' is 'true'", self.value);
+        return [self.value isEqualToString:@"true"];
+    }
 }
 
 - (NSInteger) integerValue {
@@ -166,6 +172,10 @@
         double v;
         sscanf([self.value UTF8String], "%lE", &v);
         return v;
+    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
+        float v;
+        sscanf([self.value UTF8String], "%f", &v);
+        return (double) v;
     } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
             float v;
             sscanf([self.value UTF8String], "%f", &v);
