@@ -23,7 +23,7 @@
 }
 
 - (NSEnumerator*) quadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g  error:(NSError **)error {
-    NSMutableArray* quads;
+    NSMutableArray* quads   = [[NSMutableArray alloc] init];
     [self enumerateQuadsMatchingSubject:s predicate:p object:o graph:g usingBlock:^(id<GTWQuad> q) {
         [quads addObject:q];
     } error:error];
