@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, GTWDatasetAvailability) {
 @property NSMutableArray* defaultGraphsStack;
 @property NSArray* graphs;
 
++ (GTWDataset*) datasetFromDataset: (GTWDataset*) dataset withDefaultGraphs: (NSArray*) defaultGraphs;
 - (GTWDataset*) initDatasetWithDefaultGraphs: (NSArray*) defaultGraphs;
 - (GTWDataset*) initDatasetWithDefaultGraphs: (NSArray*) defaultGraphs restrictedToGraphs: (NSArray*) graphs;
 - (NSArray*) defaultGraphs;
