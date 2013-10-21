@@ -33,6 +33,9 @@
         }
     } else if ([elementName isEqual: @"result"]) {
         self.result = [NSMutableDictionary dictionary];
+    } else if ([elementName isEqual: @"boolean"]) {
+        self.currentValue   = [NSMutableString string];
+        self.result = [NSMutableDictionary dictionary];
     } else if ([elementName isEqual: @"binding"]) {
         self.currentVariable    = attributeDict[@"name"];
     } else if ([elementName isEqual: @"uri"]) {
@@ -51,6 +54,10 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     if ([elementName isEqual: @"uri"]) {
         [self.result setObject:[[GTWIRI alloc] initWithValue:self.currentValue] forKey:self.currentVariable];
+        self.currentValue   = nil;
+    } else if ([elementName isEqual: @"boolean"]) {
+        [self.result setObject:[[GTWLiteral alloc] initWithString:self.currentValue datatype:@"http://www.w3.org/2001/XMLSchema#boolean"] forKey:@".bool"];
+        [self.results addObject: self.result];
         self.currentValue   = nil;
     } else if ([elementName isEqual: @"bnode"]) {
         [self.result setObject:[[GTWBlank alloc] initWithValue:self.currentValue] forKey:self.currentVariable];

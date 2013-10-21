@@ -18,5 +18,4 @@
 @property (retain) NSMutableString* currentValue;
 @property (retain) NSString* datatype;
 @property (retain) NSString* language;
-
 @end
