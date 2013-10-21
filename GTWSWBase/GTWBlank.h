@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "GTWSWBase.h"
 
-@interface GTWBlank : NSObject<GTWBlank>
+@interface GTWBlank : NSObject<GTWBlank, NSCopying>
 
 @property (retain, readwrite) NSString* value;
 

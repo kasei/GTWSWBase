@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "GTWSWBase.h"
 
-@interface GTWVariable : NSObject<GTWVariable>
+@interface GTWVariable : NSObject<GTWVariable, NSCopying>
 
 @property (retain, readwrite) NSString* value;
 

@@ -17,6 +17,10 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    return [[[self class] alloc] initWithName:self.value];
+}
+
 - (GTWTermType) termType {
     return GTWTermVariable;
 }
