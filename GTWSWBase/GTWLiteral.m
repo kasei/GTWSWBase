@@ -2,6 +2,14 @@
 
 @implementation GTWLiteral
 
++ (GTWLiteral*) trueLiteral {
+    return [[GTWLiteral alloc] initWithString:@"true" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+}
+
++ (GTWLiteral*) falseLiteral {
+    return [[GTWLiteral alloc] initWithString:@"false" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+}
+
 - (GTWLiteral*) copy {
     if (self.language) {
         return [[[self class] alloc] initWithString: self.value language:self.language];
@@ -10,6 +18,10 @@
     } else {
         return [[[self class] alloc] initWithValue: self.value];
     }
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
 }
 
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value {
@@ -79,6 +91,14 @@
                     return NO;
                 }
                 return YES;
+            } else if ([self isNumeric] && [object isNumeric]) {
+                if ([self doubleValue] == [object doubleValue]) {
+                    return YES;
+                } else if ([self integerValue] == [object integerValue]) {
+                    return YES;
+                } else {
+                    return NO;
+                }
             }
         }
     }
@@ -129,6 +149,8 @@
 
 - (BOOL) isNumeric {
     if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#integer"])
+        return YES;
+    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"])
         return YES;
     if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"])
         return YES;

@@ -7,8 +7,11 @@
 @property (retain, readwrite) NSString* language;
 @property (retain, readwrite) NSString* datatype;
 
++ (GTWLiteral*) trueLiteral;
++ (GTWLiteral*) falseLiteral;
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value;
 + (GTWLiteral*) doubleLiteralWithValue: (double) value;
+
 
 - (GTWLiteral*) initWithValue: (NSString*) value;
 - (GTWLiteral*) initWithString: (NSString*) string;
