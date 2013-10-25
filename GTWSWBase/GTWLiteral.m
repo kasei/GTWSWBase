@@ -24,6 +24,12 @@
     return [self copy];
 }
 
+- (id) copyReplacingValues: (NSDictionary*) map {
+    if (map[self])
+        return map[self];
+    return [self copy];
+}
+
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value {
     return [[GTWLiteral alloc] initWithString:[NSString stringWithFormat:@"%ld", value] datatype:@"http://www.w3.org/2001/XMLSchema#integer"];
 }
@@ -157,6 +163,21 @@
     if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"])
         return YES;
     return NO;
+}
+
++ (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs {
+    NSSet* datatypes    = [NSSet setWithObjects:lhs, rhs, nil];
+    if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#double"]) {
+        return @"http://www.w3.org/2001/XMLSchema#double";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#float"]) {
+        return @"http://www.w3.org/2001/XMLSchema#float";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
+        return @"http://www.w3.org/2001/XMLSchema#decimal";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#integer"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else {
+        return nil;
+    }
 }
 
 - (BOOL) booleanValue {

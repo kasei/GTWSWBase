@@ -6,6 +6,12 @@
     return [[[self class] alloc] initWithValue: self.value];
 }
 
+- (id) copyReplacingValues: (NSDictionary*) map {
+    if (map[self])
+        return map[self];
+    return [self copy];
+}
+
 - (GTWBlank*) initWithValue: (NSString*) value {
     return [self initWithID:value];
 }

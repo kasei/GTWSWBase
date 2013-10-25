@@ -2,6 +2,23 @@
 
 @implementation GTWTriple
 
+- (GTWTriple*) copy {
+    return [self copyWithZone:nil];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    id<GTWTerm,NSCopying> s   = [self.subject copyWithZone:zone];
+    id<GTWTerm,NSCopying> p   = [self.predicate copyWithZone:zone];
+    id<GTWTerm,NSCopying> o   = [self.object copyWithZone:zone];
+    return [[[self class] alloc] initWithSubject:s predicate:p object:o];
+}
+
+- (id) copyReplacingValues: (NSDictionary*) map {
+    if (map[self])
+        return map[self];
+    return [[[self class] alloc] initWithSubject:[self.subject copyReplacingValues:map] predicate:[self.predicate copyReplacingValues:map] object:[self.object copyReplacingValues:map]];
+}
+
 + (GTWTriple*) tripleFromQuad: (id<GTWQuad>) q {
     return [[GTWTriple alloc] initWithSubject:q.subject predicate:q.predicate object:q.object];
 }

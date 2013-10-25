@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol GTWTerm <NSObject>
+@protocol GTWRewriteable <NSObject>
+- (id) copyReplacingValues: (NSDictionary*) map;
+@end
 
+
+@protocol GTWTerm <NSObject, GTWRewriteable,NSCopying>
 /// The type of an Term object (including RDF Term types as well as variables)
 typedef NS_ENUM(NSInteger, GTWTermType) {
     GTWTermIRI,

@@ -2,7 +2,7 @@
 #import <Foundation/NSKeyValueCoding.h>
 #import "GTWSWBase.h"
 
-@interface GTWQuad : NSObject<GTWQuad>
+@interface GTWQuad : NSObject<GTWQuad,GTWRewriteable, NSCopying>
 
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;

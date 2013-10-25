@@ -2,6 +2,25 @@
 
 @implementation GTWQuad
 
+- (GTWQuad*) copy {
+    return [self copyWithZone:nil];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    id<GTWTerm,NSCopying> s   = [self.subject copyWithZone:zone];
+    id<GTWTerm,NSCopying> p   = [self.predicate copyWithZone:zone];
+    id<GTWTerm,NSCopying> o   = [self.object copyWithZone:zone];
+    id<GTWTerm,NSCopying> g   = [self.graph copyWithZone:zone];
+                                 return [[[self class] alloc] initWithSubject:s predicate:p object:o graph:g];
+}
+
+- (id) copyReplacingValues: (NSDictionary*) map {
+    if (map[self])
+        return map[self];
+    return [[[self class] alloc] initWithSubject:[self.subject copyReplacingValues:map] predicate:[self.predicate copyReplacingValues:map] object:[self.object copyReplacingValues:map] graph: [self.graph copyReplacingValues:map]];
+}
+
+
 + (GTWQuad*) quadFromTriple: (id<GTWTriple>) t withGraph: (id<GTWTerm>) graph {
     GTWQuad* q  = [[self alloc] initWithSubject:t.subject predicate:t.predicate object:t.object graph:graph];
     return q;

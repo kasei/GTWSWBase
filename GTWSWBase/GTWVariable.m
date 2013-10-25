@@ -21,6 +21,12 @@
     return [[[self class] alloc] initWithName:self.value];
 }
 
+- (id) copyReplacingValues: (NSDictionary*) map {
+    if (map[self])
+        return map[self];
+    return [self copy];
+}
+
 - (GTWTermType) termType {
     return GTWTermVariable;
 }

@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "GTWSWBase.h"
 
-@interface GTWLiteral : NSObject<GTWLiteral>
+@interface GTWLiteral : NSObject<GTWLiteral, GTWRewriteable,NSCopying>
 
 @property (retain, readwrite) NSString* value;
 @property (retain, readwrite) NSString* language;
@@ -11,7 +11,7 @@
 + (GTWLiteral*) falseLiteral;
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value;
 + (GTWLiteral*) doubleLiteralWithValue: (double) value;
-
++ (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs;
 
 - (GTWLiteral*) initWithValue: (NSString*) value;
 - (GTWLiteral*) initWithString: (NSString*) string;
