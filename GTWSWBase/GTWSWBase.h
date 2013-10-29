@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 @property id<GTWTerm> predicate;
 @property id<GTWTerm> object;
 - (NSArray*) allValues;
+- (BOOL) isGround;
 @end
 
 @protocol GTWQuad <GTWTriple>

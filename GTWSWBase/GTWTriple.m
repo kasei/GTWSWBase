@@ -62,4 +62,13 @@
     return @[ self.subject, self.predicate, self.object ];
 }
 
+- (BOOL) isGround {
+    for (id<GTWTerm> t in [self allValues]) {
+        if (!(t.termType == GTWTermBlank || t.termType == GTWTermLiteral || t.termType == GTWTermIRI)) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 @end
