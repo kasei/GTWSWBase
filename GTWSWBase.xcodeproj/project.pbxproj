@@ -39,6 +39,13 @@
 		371091DA17AA8D3500BFAF43 /* GTWVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C317AA8D3500BFAF43 /* GTWVariable.m */; };
 		371091DB17AA8D3500BFAF43 /* GTWVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C317AA8D3500BFAF43 /* GTWVariable.m */; };
 		371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3710919417A9B8FB00BFAF43 /* GTWSWBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371391D1180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 371391CF180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		371391D2180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */; };
+		371391D3180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */; };
+		3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */ = {isa = PBXBuildFile; fileRef = 3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3786AA2117F0F686008663E9 /* GTWGraphIsomorphism.m in Sources */ = {isa = PBXBuildFile; fileRef = 3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */; };
+		37C4DA481821F71100F31863 /* GTWSPARQLResultsJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37C4DA491821F71100F31863 /* GTWSPARQLResultsJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */; };
 		37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37F96DBB17ACF86700235009 /* GTWBlockEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */; };
 		37F96DBC17ACF86700235009 /* GTWBlockEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */; };
@@ -86,6 +93,12 @@
 		371091C117AA8D3500BFAF43 /* GTWTriple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWTriple.m; sourceTree = "<group>"; };
 		371091C217AA8D3500BFAF43 /* GTWVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWVariable.h; sourceTree = "<group>"; };
 		371091C317AA8D3500BFAF43 /* GTWVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWVariable.m; sourceTree = "<group>"; };
+		371391CF180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWSPARQLResultsXMLParser.h; sourceTree = "<group>"; };
+		371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWSPARQLResultsXMLParser.m; sourceTree = "<group>"; };
+		3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWGraphIsomorphism.h; sourceTree = "<group>"; };
+		3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWGraphIsomorphism.m; sourceTree = "<group>"; };
+		37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWSPARQLResultsJSONParser.h; sourceTree = "<group>"; };
+		37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWSPARQLResultsJSONParser.m; sourceTree = "<group>"; };
 		37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWBlockEnumerator.h; sourceTree = "<group>"; };
 		37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWBlockEnumerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +175,7 @@
 				3710918E17A9B8FB00BFAF43 /* Supporting Files */,
 				371091B617AA8D3400BFAF43 /* GTWDataset.h */,
 				371091B717AA8D3400BFAF43 /* GTWDataset.m */,
+				371391D4180DC752002D0535 /* Parsers */,
 			);
 			path = GTWSWBase;
 			sourceTree = "<group>";
@@ -195,6 +209,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		371391D4180DC752002D0535 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				371391CF180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h */,
+				371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */,
+				37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */,
+				37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */,
+			);
+			name = Parsers;
+			sourceTree = "<group>";
+		};
 		3798F17B17B0FB7600C9A1B6 /* Nodes and Terms */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +251,8 @@
 			children = (
 				37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */,
 				37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */,
+				3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */,
+				3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */,
 			);
 			name = "Utility Classes";
 			sourceTree = "<group>";
@@ -255,6 +282,9 @@
 				371091D317AA8D3500BFAF43 /* GTWQuad.h in Headers */,
 				37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */,
 				371091D617AA8D3500BFAF43 /* GTWTriple.h in Headers */,
+				3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */,
+				37C4DA481821F71100F31863 /* GTWSPARQLResultsJSONParser.h in Headers */,
+				371391D1180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h in Headers */,
 				371091D917AA8D3500BFAF43 /* GTWVariable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,9 +401,12 @@
 				371091CB17AA8D3500BFAF43 /* GTWIRI.m in Sources */,
 				371091CE17AA8D3500BFAF43 /* GTWLiteral.m in Sources */,
 				371091D117AA8D3500BFAF43 /* GTWModelBase.m in Sources */,
+				37C4DA491821F71100F31863 /* GTWSPARQLResultsJSONParser.m in Sources */,
 				371091D417AA8D3500BFAF43 /* GTWQuad.m in Sources */,
+				371391D2180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */,
 				371091D717AA8D3500BFAF43 /* GTWTriple.m in Sources */,
 				371091DA17AA8D3500BFAF43 /* GTWVariable.m in Sources */,
+				3786AA2117F0F686008663E9 /* GTWGraphIsomorphism.m in Sources */,
 				37F96DBB17ACF86700235009 /* GTWBlockEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,6 +421,7 @@
 				371091CC17AA8D3500BFAF43 /* GTWIRI.m in Sources */,
 				371091CF17AA8D3500BFAF43 /* GTWLiteral.m in Sources */,
 				371091D217AA8D3500BFAF43 /* GTWModelBase.m in Sources */,
+				371391D3180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */,
 				371091D517AA8D3500BFAF43 /* GTWQuad.m in Sources */,
 				371091D817AA8D3500BFAF43 /* GTWTriple.m in Sources */,
 				371091DB17AA8D3500BFAF43 /* GTWVariable.m in Sources */,
