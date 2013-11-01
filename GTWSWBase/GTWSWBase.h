@@ -125,7 +125,18 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 
 
 @protocol GTWDataSource <NSObject>
-- (unsigned)interfaceVersion;
+/**
+ @return
+ The API version number implemented by the data source.
+ */
++ (unsigned)interfaceVersion;
+
+/**
+ @return
+ A set of @c Protocol objects that are implemented by the data source.
+ */
++ (NSSet*) implementedProtocols;
+
 /**
  @param dictionary
  A dictionary containing data source specific initialization information.
@@ -137,7 +148,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
  @return A string containing a template description of the expected values to be passed
  to @c initWithDictionary: in order to properly initialize the data source.
  */
-- (NSString*) usage;
++ (NSString*)usage;
 @end
 
 
