@@ -25,7 +25,12 @@
 
 - (GTWIRI*) initWithIRI: (NSString*) iri base: (GTWIRI*) base {
     if (self = [self init]) {
-        NSURL* baseurl  = [[NSURL alloc] initWithString:[base value]];
+        NSString* baseuri   = base.value;
+        if (!baseuri) {
+            NSLog(@"Undefined base URI passed to GTWIRI initWithIRI:base:");
+            return nil;
+        }
+        NSURL* baseurl  = [[NSURL alloc] initWithString:baseuri];
         NSURL* url  = [[NSURL alloc] initWithString:iri relativeToURL:baseurl];
         self.value  = [url absoluteString];
         if (!self.value) {
