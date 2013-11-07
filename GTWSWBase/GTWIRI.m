@@ -57,7 +57,7 @@
     if ([object conformsToProtocol:@protocol(GTWTerm)]){
         id<GTWTerm> term    = object;
         if (self.termType == term.termType) {
-            if ([self.value isEqual:term.value]) {
+            if ([self.value isEqualToString:term.value]) {
                 return YES;
             }
         }

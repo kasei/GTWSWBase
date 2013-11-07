@@ -89,6 +89,10 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
  @return The double value of a recognized XSD numeric RDF Term.
  */
 - (double) doubleValue;
+
+- (BOOL) isSimpleLiteral;
+- (BOOL) isArgumentCompatibileWith: (id<GTWLiteral>) literal;
+
 @end
 
 
@@ -98,7 +102,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 
 
 
-@protocol GTWTriple <NSObject>
+@protocol GTWTriple <NSObject,NSCopying>
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;
 @property id<GTWTerm> object;
@@ -115,7 +119,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 
 
 
-@protocol GTWQuad <GTWTriple>
+@protocol GTWQuad <GTWTriple,NSCopying>
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;
 @property id<GTWTerm> object;

@@ -21,5 +21,7 @@
 - (BOOL) booleanValue;
 - (NSInteger) integerValue;
 - (double) doubleValue;
+- (BOOL) isSimpleLiteral;
+- (BOOL) isArgumentCompatibileWith: (id<GTWLiteral>) literal;
 
 @end

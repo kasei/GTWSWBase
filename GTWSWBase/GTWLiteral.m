@@ -85,13 +85,13 @@
     if ([object conformsToProtocol:@protocol(GTWTerm)]){
         id<GTWTerm> term    = object;
         if (self.termType == term.termType) {
-            if ([self.value isEqual:term.value]) {
-                if ([self.language isEqual:term.language]) {
+            if ([self.value isEqualToString:term.value]) {
+                if ([self.language isEqualToString:term.language]) {
                     return YES;
                 } else if (self.language || term.language) {
                     return NO;
                 }
-                if ([self.datatype isEqual:term.datatype]) {
+                if ([self.datatype isEqualToString:term.datatype]) {
                     return YES;
                 } else if (self.datatype || term.datatype) {
                     return NO;
@@ -228,6 +228,37 @@
     } else {
         return 0.0;
     }
+}
+
+- (BOOL) isSimpleLiteral {
+    if (self.datatype && ![self.datatype isEqual: @"http://www.w3.org/2001/XMLSchema#string"]) {
+        return NO;
+    }
+    if (self.language) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL) isArgumentCompatibileWith: (id<GTWLiteral>) literal {
+    //Compatibility of two arguments is defined as:
+    //
+    //The arguments are simple literals or literals typed as xsd:string
+    if ([self isSimpleLiteral] && [literal isSimpleLiteral]) {
+        return YES;
+    }
+
+    //The arguments are plain literals with identical language tags
+    if (self.language && literal.language && [self.language isEqual: literal.language]) {
+        return YES;
+    }
+    
+    //The first argument is a plain literal with language tag and the second argument is a simple literal or literal typed as xsd:string
+    if (self.language && [literal isSimpleLiteral]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end
