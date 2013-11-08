@@ -16,9 +16,9 @@
 - (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set {
     NSError* error  = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSLog(@"JSON data: %@", json);
+//    NSLog(@"JSON data: %@", json);
     if (error) {
-        NSLog(@"%@", error);
+        NSLog(@"SPARQL-JSON Parsing error: %@", error);
         return nil;
     }
     
@@ -65,7 +65,7 @@
             }
             [results addObject:result];
         }
-        NSLog(@"JSON Parsed object: %@", json);
+//        NSLog(@"JSON Parsed object: %@", json);
         return [results objectEnumerator];
     }
 }
