@@ -1,5 +1,7 @@
 #import "GTWLiteral.h"
 
+static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|integer|long|short|nonPositiveInteger|nonNegativeInteger|unsignedLong|unsignedInt|unsignedShort|unsignedByte|positiveInteger|negativeInteger)";
+
 @implementation GTWLiteral
 
 + (GTWLiteral*) trueLiteral {
@@ -154,18 +156,19 @@
 }
 
 - (BOOL) isNumeric {
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#integer"])
+//    NSLog(@"isNumeric? %@", self.datatype);
+    if (!self.datatype)
+        return NO;
+    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
         return YES;
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"])
+    } else if ([self.datatype rangeOfString:@"http://www.w3.org/2001/XMLSchema#(decimal|double|float)" options:NSRegularExpressionSearch].location == 0) {
         return YES;
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"])
-        return YES;
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"])
-        return YES;
+    }
     return NO;
 }
 
 + (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs {
+//    NSLog(@"promoting type: %@ %@\n", lhs, rhs);
     NSSet* datatypes    = [NSSet setWithObjects:lhs, rhs, nil];
     if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#double"]) {
         return @"http://www.w3.org/2001/XMLSchema#double";
@@ -174,6 +177,30 @@
     } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
         return @"http://www.w3.org/2001/XMLSchema#decimal";
     } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#integer"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#int"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#long"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#byte"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#short"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#nonNegativeInteger"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#nonPositiveInteger"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedLong"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedInt"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedShort"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedByte"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#positiveInteger"]) {
+        return @"http://www.w3.org/2001/XMLSchema#integer";
+    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#negativeInteger"]) {
         return @"http://www.w3.org/2001/XMLSchema#integer";
     } else {
         return nil;
@@ -197,7 +224,7 @@
 - (NSInteger) integerValue {
     if (!self.datatype)
         return 0;
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#integer"]) {
+    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
         return atoll([self.value UTF8String]);
     } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"]) {
         return (NSInteger) [self doubleValue];
@@ -223,7 +250,7 @@
             float v;
             sscanf([self.value UTF8String], "%f", &v);
             return (double) v;
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#integer"]) {
+    } else if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
         return (double) [self integerValue];
     } else {
         return 0.0;
@@ -258,6 +285,42 @@
         return YES;
     }
     
+    return NO;
+}
+
+- (BOOL) effectiveBooleanValueWithError: (NSError**) error {
+    if (self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#boolean"]) {
+        BOOL ebv    = [self booleanValue];
+//        NSLog(@"EBV %@ => %d", self, ebv);
+        return ebv;
+    } else if ((self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#string"]) || (self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"]) || [self isSimpleLiteral]) {
+//        NSLog(@"xsd:string EBV: %@", self);
+        if ([self.value length] == 0) {
+            return NO;
+        } else {
+            return YES;
+        }
+    } else if ([self isNumeric]) {
+        NSInteger ivalue    = [self integerValue];
+//        NSLog(@"EBV integer value: %ld (%d)", ivalue, (ivalue != 0));
+        if (ivalue != 0) {
+            return YES;
+        } else {
+            double value    = [self doubleValue];
+//            NSLog(@"EBV double value: %lf (%d)", value, (value != 0.0L));
+            if (value == 0.0L) {
+                return NO;
+            } else {
+                return YES;
+            }
+        }
+    } else {
+//        NSLog(@"EBV of unexpected value: %@", self);
+    }
+    
+    if (error) {
+        *error  =  [NSError errorWithDomain:@"us.kasei.swbase.ebv" code:1 userInfo:@{@"description": @"EBV TypeError"}];
+    }
     return NO;
 }
 

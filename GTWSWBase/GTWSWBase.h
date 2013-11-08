@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
  */
 - (id<GTWTerm>) initWithValue: (NSString*) value;
 - (GTWTermType) termType;
+- (BOOL) effectiveBooleanValueWithError: (NSError**) error;
 
 /**
  @return The lexical value of the RDF Term.
@@ -101,16 +102,17 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 @end
 
 
-
-@protocol GTWTriple <NSObject,NSCopying>
-@property id<GTWTerm> subject;
-@property id<GTWTerm> predicate;
-@property id<GTWTerm> object;
+@protocol GTWStatement <NSObject>
 /**
  @return An array of the subject, predicate, and object RDF Term objects.
  */
 - (NSArray*) allValues;
+@end
 
+@protocol GTWTriple <GTWStatement,NSCopying>
+@property id<GTWTerm> subject;
+@property id<GTWTerm> predicate;
+@property id<GTWTerm> object;
 /**
  @return @c YES is the triple's subject, predicate, and object values are all either IRIs, Literals, or Blanks (not Variables). @c NO otherwise.
  */
@@ -513,6 +515,7 @@ typedef NS_ENUM(NSInteger, GTWType) {
 //};
 
 @protocol GTWSerializer <NSObject>
+- (NSData*) dataFromEnumerator: (NSEnumerator*) triples;
 @end
 
 @protocol GTWTriplesSerializer <GTWSerializer>
