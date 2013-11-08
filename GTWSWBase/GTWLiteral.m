@@ -100,12 +100,18 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
                 }
                 return YES;
             } else if ([self isNumeric] && [object isNumeric]) {
-                if ([self doubleValue] == [object doubleValue]) {
-                    return YES;
-                } else if ([self integerValue] == [object integerValue]) {
-                    return YES;
+                if ([self isDouble] || [object isDouble]) {
+                    if ([self doubleValue] == [object doubleValue]) {
+                        return YES;
+                    } else {
+                        return NO;
+                    }
                 } else {
-                    return NO;
+                    if ([self integerValue] == [object integerValue]) {
+                        return YES;
+                    } else {
+                        return NO;
+                    }
                 }
             }
         }
@@ -153,6 +159,24 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 
 - (NSUInteger)hash {
     return [[self.value description] hash];
+}
+
+- (BOOL) isInteger {
+    if (!self.datatype)
+        return NO;
+    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL) isDouble {
+    if (!self.datatype)
+        return NO;
+    if ([self.datatype rangeOfString:@"http://www.w3.org/2001/XMLSchema#(decimal|double|float)" options:NSRegularExpressionSearch].location == 0) {
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL) isNumeric {
@@ -225,7 +249,10 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
     if (!self.datatype)
         return 0;
     if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
-        return atoll([self.value UTF8String]);
+        long long value = atoll([self.value UTF8String]);
+        return (NSInteger) value;
+    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
+        return (NSInteger) [self doubleValue];
     } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"]) {
         return (NSInteger) [self doubleValue];
     } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
@@ -238,14 +265,13 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 - (double) doubleValue {
     if (!self.datatype)
         return 0.0;
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"]) {
+    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"] || [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
+        NSDecimalNumber *decNumber = [NSDecimalNumber decimalNumberWithString:self.value];
+        return [decNumber doubleValue];
+    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
         double v;
         sscanf([self.value UTF8String], "%lE", &v);
         return v;
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
-        float v;
-        sscanf([self.value UTF8String], "%f", &v);
-        return (double) v;
     } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
             float v;
             sscanf([self.value UTF8String], "%f", &v);
