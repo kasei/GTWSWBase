@@ -13,8 +13,25 @@
     return objects;
 }
 
+- (NSArray*) subjectsForPredicate: (id<GTWTerm>) predicate object: (id<GTWTerm>) object graph: (id<GTWTerm>) graph {
+    NSMutableArray* objects = [NSMutableArray array];
+    [self enumerateQuadsMatchingSubject:nil predicate:predicate object:object graph:graph usingBlock:^(id<GTWQuad> q) {
+        [objects addObject:q.subject];
+    } error:nil];
+    return objects;
+}
+
 - (id<GTWTerm>) anyObjectForSubject: (id<GTWTerm>) subject predicate: (id<GTWTerm>) predicate graph: (id<GTWTerm>) graph {
     NSArray* array  = [self objectsForSubject:subject predicate:predicate graph:graph];
+    if (array && [array count]) {
+        return array[0];
+    } else {
+        return nil;
+    }
+}
+
+- (id<GTWTerm>) anySubjectForPredicate: (id<GTWTerm>) predicate object: (id<GTWTerm>) object graph: (id<GTWTerm>) graph {
+    NSArray* array  = [self subjectsForPredicate:predicate object:object graph:graph];
     if (array && [array count]) {
         return array[0];
     } else {
@@ -33,7 +50,8 @@
 - (BOOL) isEqual:(id<GTWModel>)model {
     return [GTWGraphIsomorphism
             graphEnumerator:[self quadsMatchingSubject:nil predicate:nil object:nil graph:nil error:nil]
-            isomorphicWith:[model quadsMatchingSubject:nil predicate:nil object:nil graph:nil error:nil]];
+            isomorphicWith:[model quadsMatchingSubject:nil predicate:nil object:nil graph:nil error:nil]
+            reason:nil];
 }
 
 @end
