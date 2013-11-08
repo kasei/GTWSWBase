@@ -10,6 +10,6 @@
 
 @interface GTWGraphIsomorphism : NSObject
 
-+ (BOOL) graphEnumerator: (NSEnumerator*) a isomorphicWith: (NSEnumerator*) b;
++ (BOOL) graphEnumerator: (NSEnumerator*) a isomorphicWith: (NSEnumerator*) b reason: (NSError**) error;
 
 @end
