@@ -515,7 +515,6 @@ typedef NS_ENUM(NSInteger, GTWType) {
 //};
 
 @protocol GTWSerializer <NSObject>
-- (NSData*) dataFromEnumerator: (NSEnumerator*) triples;
 @end
 
 @protocol GTWTriplesSerializer <GTWSerializer>
