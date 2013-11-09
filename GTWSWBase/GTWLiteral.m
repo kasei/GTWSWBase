@@ -4,6 +4,10 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 
 @implementation GTWLiteral
 
++ (NSSet*) supportedDatatypes {
+    return [NSSet setWithObjects:@"http://www.w3.org/2001/XMLSchema#string", @"http://www.w3.org/2001/XMLSchema#date", @"http://www.w3.org/2001/XMLSchema#dateTime", @"http://www.w3.org/2001/XMLSchema#byte", @"http://www.w3.org/2001/XMLSchema#int", @"http://www.w3.org/2001/XMLSchema#integer", @"http://www.w3.org/2001/XMLSchema#long", @"http://www.w3.org/2001/XMLSchema#short", @"http://www.w3.org/2001/XMLSchema#nonPositiveInteger", @"http://www.w3.org/2001/XMLSchema#nonNegativeInteger", @"http://www.w3.org/2001/XMLSchema#unsignedLong", @"http://www.w3.org/2001/XMLSchema#unsignedInt", @"http://www.w3.org/2001/XMLSchema#unsignedShort", @"http://www.w3.org/2001/XMLSchema#unsignedByte", @"http://www.w3.org/2001/XMLSchema#positiveInteger", @"http://www.w3.org/2001/XMLSchema#negativeInteger", @"http://www.w3.org/2001/XMLSchema#decimal", @"http://www.w3.org/2001/XMLSchema#float", @"http://www.w3.org/2001/XMLSchema#double", nil];
+}
+
 + (GTWLiteral*) trueLiteral {
     return [[GTWLiteral alloc] initWithValue:@"true" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
 }
@@ -188,7 +192,6 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 }
 
 + (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs {
-//    NSLog(@"promoting type: %@ %@\n", lhs, rhs);
     NSSet* datatypes    = [NSSet setWithObjects:lhs, rhs, nil];
     if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#double"]) {
         return @"http://www.w3.org/2001/XMLSchema#double";
@@ -196,47 +199,25 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
         return @"http://www.w3.org/2001/XMLSchema#float";
     } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
         return @"http://www.w3.org/2001/XMLSchema#decimal";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#integer"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#int"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#long"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#byte"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#short"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#nonNegativeInteger"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#nonPositiveInteger"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedLong"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedInt"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedShort"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#unsignedByte"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#positiveInteger"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
-    } else if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#negativeInteger"]) {
-        return @"http://www.w3.org/2001/XMLSchema#integer";
     } else {
+        NSSet* supported    = [self supportedDatatypes];
+        for (NSString* type in supported) {
+            if ([type hasPrefix:@"http://www.w3.org/2001/XMLSchema#date"]) {
+                return nil;
+            } else if ([datatypes containsObject:type]) {
+                return @"http://www.w3.org/2001/XMLSchema#integer";
+            }
+        }
         return nil;
     }
 }
 
 - (BOOL) booleanValue {
-//    NSLog(@"testing boolean value of %@", self);
     if (!self.datatype) {
-//        NSLog(@"-> no datatype");
         return NO;
     } else if (![self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#boolean"]) {
-//        NSLog(@"-> not a boolean datatype");
         return NO;
     } else {
-//        NSLog(@"-> testing if value '%@' is 'true'", self.value);
         return [self.value isEqualToString:@"true"];
     }
 }
