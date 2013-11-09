@@ -13,10 +13,9 @@
 + (GTWLiteral*) doubleLiteralWithValue: (double) value;
 + (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs;
 
-- (GTWLiteral*) initWithValue: (NSString*) value;
-- (GTWLiteral*) initWithString: (NSString*) string;
-- (GTWLiteral*) initWithString: (NSString*) string language: (NSString*) language;
-- (GTWLiteral*) initWithString: (NSString*) string datatype: (NSString*) datatype;
+- (GTWLiteral*) initWithValue: (NSString*) string;
+- (GTWLiteral*) initWithValue: (NSString*) string language: (NSString*) language;
+- (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype;
 
 - (BOOL) booleanValue;
 - (NSInteger) integerValue;

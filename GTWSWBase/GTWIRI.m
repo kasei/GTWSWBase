@@ -12,18 +12,14 @@
     return [self copy];
 }
 
-- (GTWIRI*) initWithValue: (NSString*) value {
-    return [self initWithIRI:value];
-}
-
-- (GTWIRI*) initWithIRI: (NSString*) iri {
+- (GTWIRI*) initWithValue: (NSString*) iri {
     if (self = [self init]) {
         self.value  = iri;
     }
     return self;
 }
 
-- (GTWIRI*) initWithIRI: (NSString*) iri base: (GTWIRI*) base {
+- (GTWIRI*) initWithValue: (NSString*) iri base: (GTWIRI*) base {
     if (self = [self init]) {
         NSString* baseuri   = base.value;
         if (!baseuri) {

@@ -6,11 +6,7 @@
     return [[[self class] alloc] initWithValue: self.value];
 }
 
-- (GTWVariable*) initWithValue: (NSString*) value {
-    return [self initWithName:value];
-}
-
-- (GTWVariable*) initWithName: (NSString*) name {
+- (GTWVariable*) initWithValue: (NSString*) name {
     if (self = [self init]) {
         self.value  = name;
     }

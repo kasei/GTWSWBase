@@ -5,18 +5,18 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 @implementation GTWLiteral
 
 + (GTWLiteral*) trueLiteral {
-    return [[GTWLiteral alloc] initWithString:@"true" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+    return [[GTWLiteral alloc] initWithValue:@"true" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
 }
 
 + (GTWLiteral*) falseLiteral {
-    return [[GTWLiteral alloc] initWithString:@"false" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+    return [[GTWLiteral alloc] initWithValue:@"false" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
 }
 
 - (GTWLiteral*) copy {
     if (self.language) {
-        return [[[self class] alloc] initWithString: self.value language:self.language];
+        return [[[self class] alloc] initWithValue: self.value language:self.language];
     } else if (self.datatype) {
-        return [[[self class] alloc] initWithString: self.value datatype:self.datatype];
+        return [[[self class] alloc] initWithValue: self.value datatype:self.datatype];
     } else {
         return [[[self class] alloc] initWithValue: self.value];
     }
@@ -33,25 +33,21 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 }
 
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value {
-    return [[GTWLiteral alloc] initWithString:[NSString stringWithFormat:@"%ld", value] datatype:@"http://www.w3.org/2001/XMLSchema#integer"];
+    return [[GTWLiteral alloc] initWithValue:[NSString stringWithFormat:@"%ld", value] datatype:@"http://www.w3.org/2001/XMLSchema#integer"];
 }
 
 + (GTWLiteral*) doubleLiteralWithValue: (double) value {
-    return [[GTWLiteral alloc] initWithString:[NSString stringWithFormat:@"%lE", value] datatype:@"http://www.w3.org/2001/XMLSchema#double"];
+    return [[GTWLiteral alloc] initWithValue:[NSString stringWithFormat:@"%lE", value] datatype:@"http://www.w3.org/2001/XMLSchema#double"];
 }
 
-- (GTWLiteral*) initWithValue: (NSString*) value {
-    return [self initWithString:value];
-}
-
-- (GTWLiteral*) initWithString: (NSString*) string {
+- (GTWLiteral*) initWithValue: (NSString*) string {
     if (self = [self init]) {
         self.value  = string;
     }
     return self;
 }
 
-- (GTWLiteral*) initWithString: (NSString*) string language: (NSString*) language {
+- (GTWLiteral*) initWithValue: (NSString*) string language: (NSString*) language {
     if (self = [self init]) {
         self.value      = string;
         self.language   = [language lowercaseString];
@@ -60,7 +56,7 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
     return self;
 }
 
-- (GTWLiteral*) initWithString: (NSString*) string datatype: (NSString*) datatype {
+- (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype {
     if (self = [self init]) {
         self.value      = string;
         self.datatype   = datatype;

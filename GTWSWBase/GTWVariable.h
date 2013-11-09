@@ -6,6 +6,5 @@
 @property (retain, readwrite) NSString* value;
 
 - (GTWVariable*) initWithValue: (NSString*) value;
-- (GTWVariable*) initWithName: (NSString*) name;
 
 @end

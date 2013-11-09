@@ -48,9 +48,9 @@
                     term    = [[GTWIRI alloc] initWithValue:termData[@"value"]];
                 } else if ([type isEqual: @"literal"] || [type isEqual: @"typed-literal"]) {
                     if (termData[@"xml:lang"]) {
-                        term    = [[GTWLiteral alloc] initWithString:termData[@"value"] language:termData[@"xml:lang"]];
+                        term    = [[GTWLiteral alloc] initWithValue:termData[@"value"] language:termData[@"xml:lang"]];
                     } else if (termData[@"datatype"]) {
-                        term    = [[GTWLiteral alloc] initWithString:termData[@"value"] datatype:termData[@"datatype"]];
+                        term    = [[GTWLiteral alloc] initWithValue:termData[@"value"] datatype:termData[@"datatype"]];
                     } else {
                         term    = [[GTWLiteral alloc] initWithValue:termData[@"value"]];
                     }

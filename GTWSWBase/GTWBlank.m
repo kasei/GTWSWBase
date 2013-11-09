@@ -13,12 +13,8 @@
 }
 
 - (GTWBlank*) initWithValue: (NSString*) value {
-    return [self initWithID:value];
-}
-
-- (GTWBlank*) initWithID: (NSString*) ident {
     if (self = [self init]) {
-        self.value  = ident;
+        self.value  = value;
     }
     return self;
 }

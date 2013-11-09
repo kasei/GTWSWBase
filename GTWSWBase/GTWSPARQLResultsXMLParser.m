@@ -56,7 +56,7 @@
         [self.result setObject:[[GTWIRI alloc] initWithValue:self.currentValue] forKey:self.currentVariable];
         self.currentValue   = nil;
     } else if ([elementName isEqual: @"boolean"]) {
-        [self.result setObject:[[GTWLiteral alloc] initWithString:self.currentValue datatype:@"http://www.w3.org/2001/XMLSchema#boolean"] forKey:@".bool"];
+        [self.result setObject:[[GTWLiteral alloc] initWithValue:self.currentValue datatype:@"http://www.w3.org/2001/XMLSchema#boolean"] forKey:@".bool"];
         [self.results addObject: self.result];
         self.currentValue   = nil;
     } else if ([elementName isEqual: @"bnode"]) {
@@ -64,9 +64,9 @@
         self.currentValue   = nil;
     } else if ([elementName isEqual: @"literal"]) {
         if (self.datatype) {
-            [self.result setObject:[[GTWLiteral alloc] initWithString:self.currentValue datatype:self.datatype] forKey:self.currentVariable];
+            [self.result setObject:[[GTWLiteral alloc] initWithValue:self.currentValue datatype:self.datatype] forKey:self.currentVariable];
         } else if (self.language) {
-            [self.result setObject:[[GTWLiteral alloc] initWithString:self.currentValue language:self.language] forKey:self.currentVariable];
+            [self.result setObject:[[GTWLiteral alloc] initWithValue:self.currentValue language:self.language] forKey:self.currentVariable];
         } else {
             [self.result setObject:[[GTWLiteral alloc] initWithValue:self.currentValue] forKey:self.currentVariable];
         }
