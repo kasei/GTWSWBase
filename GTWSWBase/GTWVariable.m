@@ -14,7 +14,7 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    return [[[self class] alloc] initWithName:self.value];
+    return [[[self class] alloc] initWithValue:self.value];
 }
 
 - (id) copyReplacingValues: (NSDictionary*) map {
