@@ -1,19 +1,36 @@
 #import "GTWLiteral.h"
 
-static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|integer|long|short|nonPositiveInteger|nonNegativeInteger|unsignedLong|unsignedInt|unsignedShort|unsignedByte|positiveInteger|negativeInteger)";
+static NSString* INTEGER_PATTERN    = @"http://www.w3.org/2001/XMLSchema#(byte|int|integer|long|short|nonPositiveInteger|nonNegativeInteger|unsignedLong|unsignedInt|unsignedShort|unsignedByte|positiveInteger|negativeInteger)";
+static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([+]|-)\\d\\d:\\d\\d)|Z)?";
 
 @implementation GTWLiteral
 
 + (NSSet*) supportedDatatypes {
-    return [NSSet setWithObjects:@"http://www.w3.org/2001/XMLSchema#string", @"http://www.w3.org/2001/XMLSchema#date", @"http://www.w3.org/2001/XMLSchema#dateTime", @"http://www.w3.org/2001/XMLSchema#byte", @"http://www.w3.org/2001/XMLSchema#int", @"http://www.w3.org/2001/XMLSchema#integer", @"http://www.w3.org/2001/XMLSchema#long", @"http://www.w3.org/2001/XMLSchema#short", @"http://www.w3.org/2001/XMLSchema#nonPositiveInteger", @"http://www.w3.org/2001/XMLSchema#nonNegativeInteger", @"http://www.w3.org/2001/XMLSchema#unsignedLong", @"http://www.w3.org/2001/XMLSchema#unsignedInt", @"http://www.w3.org/2001/XMLSchema#unsignedShort", @"http://www.w3.org/2001/XMLSchema#unsignedByte", @"http://www.w3.org/2001/XMLSchema#positiveInteger", @"http://www.w3.org/2001/XMLSchema#negativeInteger", @"http://www.w3.org/2001/XMLSchema#decimal", @"http://www.w3.org/2001/XMLSchema#float", @"http://www.w3.org/2001/XMLSchema#double", nil];
+    static NSSet *_datatypes = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _datatypes = [NSSet setWithObjects:@"http://www.w3.org/2001/XMLSchema#string", @"http://www.w3.org/2001/XMLSchema#date", @"http://www.w3.org/2001/XMLSchema#dateTime", @"http://www.w3.org/2001/XMLSchema#byte", @"http://www.w3.org/2001/XMLSchema#int", @"http://www.w3.org/2001/XMLSchema#integer", @"http://www.w3.org/2001/XMLSchema#long", @"http://www.w3.org/2001/XMLSchema#short", @"http://www.w3.org/2001/XMLSchema#nonPositiveInteger", @"http://www.w3.org/2001/XMLSchema#nonNegativeInteger", @"http://www.w3.org/2001/XMLSchema#unsignedLong", @"http://www.w3.org/2001/XMLSchema#unsignedInt", @"http://www.w3.org/2001/XMLSchema#unsignedShort", @"http://www.w3.org/2001/XMLSchema#unsignedByte", @"http://www.w3.org/2001/XMLSchema#positiveInteger", @"http://www.w3.org/2001/XMLSchema#negativeInteger", @"http://www.w3.org/2001/XMLSchema#decimal", @"http://www.w3.org/2001/XMLSchema#float", @"http://www.w3.org/2001/XMLSchema#double", nil];
+    });
+    
+    return _datatypes;
 }
 
 + (GTWLiteral*) trueLiteral {
-    return [[GTWLiteral alloc] initWithValue:@"true" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+    static GTWLiteral* _literal;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _literal    = [[GTWLiteral alloc] initWithValue:@"true" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+    });
+    return _literal;
 }
 
 + (GTWLiteral*) falseLiteral {
-    return [[GTWLiteral alloc] initWithValue:@"false" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+    static GTWLiteral* _literal;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _literal    = [[GTWLiteral alloc] initWithValue:@"false" datatype:@"http://www.w3.org/2001/XMLSchema#boolean"];
+    });
+    return _literal;
 }
 
 - (GTWLiteral*) copy {
@@ -155,10 +172,60 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
                         return NO;
                     }
                 }
+            } else if ([self isValidXSDDate] && [(GTWLiteral*)literal isValidXSDDate]) {
+                NSComparisonResult cmp  = [self compare:object];
+                if (cmp == NSOrderedSame) {
+                    return YES;
+                } else {
+                    return NO;
+                }
             }
         }
     }
     return NO;
+}
+
++ (BOOL) literal: (id<GTWLiteral>) l isComparableWith: (id<GTWLiteral>) term {
+    if (!term)
+        return NO;
+    if (l.termType != term.termType) {
+        return YES;
+    } else {
+        id<GTWLiteral> literal  = (id<GTWLiteral>) term;
+        if (!l.datatype && !term.datatype) {
+            return YES;
+        } else if ([l isNumeric] && [literal isNumeric]) {
+            if ([l isInteger]) {
+                if (![(GTWLiteral*)l isValidLexicalInteger]) {
+                    return NO;
+                }
+            }
+            if ([l isDouble]) {
+                if (![(GTWLiteral*)l isValidLexicalDouble]) {
+                    return NO;
+                }
+            }
+            return YES;
+        } else if (l.datatype && term.datatype) {
+            if ([l.datatype isEqual: term.datatype]) {
+                if ([l.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#date"]) {
+                    return YES;
+                } else if ([l.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#dateTime"]) {
+                    return YES;
+                } else {
+                    if ([l.value isEqualToString:term.value]) {
+                        // Unknown datatype, but identical lexical forms, so the terms are equal
+                        return YES;
+                    }
+                    return NO;
+                }
+            } else {
+                return NO;
+            }
+        } else {
+            return NO;
+        }
+    }
 }
 
 - (NSComparisonResult)compare:(id<GTWTerm>)term {
@@ -187,6 +254,24 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
             cmp = [self.datatype compare:term.datatype];
             if (cmp != NSOrderedSame)
                 return cmp;
+            
+            if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#date"]) {
+                NSLog(@"comparing typed literal: %@ %@", self, term);
+                if ([self isValidXSDDate] && [(GTWLiteral*)literal isValidXSDDate]) {
+                    NSDictionary* thisDate = [self xsdDateComponents];
+                    NSDictionary* thatDate  = [(GTWLiteral*)literal xsdDateComponents];
+                    BOOL thisTZ             = ([thisDate[@"tz"] length] ? YES : NO);
+                    BOOL thatTZ             = ([thatDate[@"tz"] length] ? YES : NO);
+                    if (thisTZ && thatTZ) {
+                        return [self.value compare:term.value];
+                    } else {
+                        // TODO: need to fuzzy compare based on the fact that one or both of the terms is floating
+                        return [self.value compare:term.value];
+                    }
+                } else {
+                    NSLog(@"-> not valid xsd:date lexical form");
+                }
+            }
             return [self.value compare:term.value];
         } else {
             if (!self.datatype) {
@@ -199,6 +284,76 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
     return NSOrderedSame;
 }
 
+- (NSDictionary*) xsdDateComponents {
+    NSRegularExpression* re = [NSRegularExpression regularExpressionWithPattern:XSD_DATE_PATTERN options:0 error:nil];
+    NSTextCheckingResult* r = [re firstMatchInString:self.value options:0 range:NSMakeRange(0, [self.value length])];
+    NSRange signrange       = [r rangeAtIndex: 1];
+    NSRange yearrange       = [r rangeAtIndex: 2];
+    NSRange monthrange      = [r rangeAtIndex: 3];
+    NSRange dayrange        = [r rangeAtIndex: 4];
+    NSRange tzrange         = [r rangeAtIndex: 5];
+    
+    NSString* tz    = @"";
+    if (tzrange.location != NSNotFound) {
+        tz  = [self.value substringWithRange:tzrange];
+        if ([tz isEqual: @"Z"]) {
+            tz  = @"+00:00";
+        } else if ([tz isEqual: @"-00:00"]) {
+            tz  = @"+00:00";
+        } else if ([tz isEqual: @"00:00"]) {
+            tz  = @"+00:00";
+        }
+    }
+    return @{
+             @"sign": [self.value substringWithRange:signrange],
+             @"year": [self.value substringWithRange:yearrange],
+             @"month": [self.value substringWithRange:monthrange],
+             @"day": [self.value substringWithRange:dayrange],
+             @"tz": tz,
+             };
+    
+}
+
+- (BOOL) isValidLexicalInteger {
+    if (![self isInteger])
+        return NO;
+    NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+" options:NSRegularExpressionSearch];
+    if (range.location == 0 && range.length == [self.value length]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) isValidLexicalDouble {
+    if (![self isDouble])
+        return NO;
+    // TODO: Check lexical form
+    if ([self.datatype isEqual:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
+        NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+([.]\\d+)?" options:NSRegularExpressionSearch];
+        if (range.location == 0 && range.length == [self.value length])
+            return YES;
+    } else {
+        // xsd:float or xsd:double
+        // TODO: We don't handle Inf or NaN here because we're using this function to know if we can use the double values in comparisons.
+        NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+([.]\\d+([eE]([+]|-)?\\d+)?)?" options:NSRegularExpressionSearch];
+        if (range.location == 0 && range.length == [self.value length])
+            return YES;
+    }
+    return NO;
+}
+
+- (BOOL) isValidXSDDate {
+    if (!self.datatype)
+        return NO;
+    if (![self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#date"])
+        return NO;
+    NSRange range       = [self.value rangeOfString:XSD_DATE_PATTERN options:NSRegularExpressionSearch];
+    if (range.location == 0 && range.length == [self.value length])
+        return YES;
+    return NO;
+}
+
 - (NSUInteger)hash {
     return [[self.value description] hash];
 }
@@ -206,18 +361,16 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 - (BOOL) isInteger {
     if (!self.datatype)
         return NO;
-    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
+    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0)
         return YES;
-    }
     return NO;
 }
 
 - (BOOL) isDouble {
     if (!self.datatype)
         return NO;
-    if ([self.datatype rangeOfString:@"http://www.w3.org/2001/XMLSchema#(decimal|double|float)" options:NSRegularExpressionSearch].location == 0) {
+    if ([self.datatype rangeOfString:@"http://www.w3.org/2001/XMLSchema#(decimal|double|float)" options:NSRegularExpressionSearch].location == 0)
         return YES;
-    }
     return NO;
 }
 
@@ -243,17 +396,13 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
         return @"http://www.w3.org/2001/XMLSchema#decimal";
     } else {
         NSSet* supported    = [self supportedDatatypes];
-//        NSLog(@"checking types %@", datatypes);
-//        NSLog(@"supported datatypes: %@", supported);
         for (NSString* type in datatypes) {
             if ([type hasPrefix:@"http://www.w3.org/2001/XMLSchema#date"]) {
-//                NSLog(@"date types cannot be promoted");
                 return nil;
             } else if ([supported containsObject:type]) {
                 return @"http://www.w3.org/2001/XMLSchema#integer";
             }
         }
-//        NSLog(@"neither datatype is recognized");
         return nil;
     }
 }
@@ -340,10 +489,8 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 - (BOOL) effectiveBooleanValueWithError: (NSError**) error {
     if (self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#boolean"]) {
         BOOL ebv    = [self booleanValue];
-//        NSLog(@"EBV %@ => %d", self, ebv);
         return ebv;
     } else if ((self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#string"]) || (self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"]) || [self isSimpleLiteral]) {
-//        NSLog(@"xsd:string EBV: %@", self);
         if ([self.value length] == 0) {
             return NO;
         } else {
@@ -351,19 +498,17 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
         }
     } else if ([self isNumeric]) {
         NSInteger ivalue    = [self integerValue];
-//        NSLog(@"EBV integer value: %ld (%d)", ivalue, (ivalue != 0));
         if (ivalue != 0) {
             return YES;
         } else {
             double value    = [self doubleValue];
-//            NSLog(@"EBV double value: %lf (%d)", value, (value != 0.0L));
             if (value == 0.0L) {
                 return NO;
             } else {
                 return YES;
             }
         }
-    } else {
+//    } else {
 //        NSLog(@"EBV of unexpected value: %@", self);
     }
     

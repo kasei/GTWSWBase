@@ -7,6 +7,7 @@
 @property (retain, readwrite) NSString* language;
 @property (retain, readwrite) NSString* datatype;
 
++ (BOOL) literal: (id<GTWLiteral>) l isComparableWith: (id<GTWLiteral>) term;
 + (NSSet*) supportedDatatypes;
 + (GTWLiteral*) trueLiteral;
 + (GTWLiteral*) falseLiteral;
