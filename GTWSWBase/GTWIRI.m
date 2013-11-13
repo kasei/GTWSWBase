@@ -12,6 +12,10 @@
     return [self copy];
 }
 
+- (id<GTWTerm>) copyWithCanonicalization {
+    return [self copy];
+}
+
 - (GTWIRI*) initWithValue: (NSString*) iri {
     if (self = [self init]) {
         self.value  = iri;
@@ -59,6 +63,10 @@
         }
     }
     return NO;
+}
+
+- (BOOL) isValueEqual:(id<GTWTerm>)object {
+    return [self isEqual:object];
 }
 
 - (NSComparisonResult)compare:(id<GTWTerm>)term {

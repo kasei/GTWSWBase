@@ -12,6 +12,10 @@
     return [self copy];
 }
 
+- (id<GTWTerm>) copyWithCanonicalization {
+    return [self copy];
+}
+
 - (GTWBlank*) initWithValue: (NSString*) value {
     if (self = [self init]) {
         self.value  = value;
@@ -44,6 +48,10 @@
     }
 //    NSLog(@"-> NO");
     return NO;
+}
+
+- (BOOL) isValueEqual:(id<GTWTerm>)object {
+    return [self isEqual:object];
 }
 
 - (NSComparisonResult)compare:(id<GTWTerm>)term {

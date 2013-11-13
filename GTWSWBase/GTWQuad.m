@@ -11,7 +11,7 @@
     id<GTWTerm,NSCopying> p   = [self.predicate copyWithZone:zone];
     id<GTWTerm,NSCopying> o   = [self.object copyWithZone:zone];
     id<GTWTerm,NSCopying> g   = [self.graph copyWithZone:zone];
-                                 return [[[self class] alloc] initWithSubject:s predicate:p object:o graph:g];
+    return [[[self class] alloc] initWithSubject:s predicate:p object:o graph:g];
 }
 
 - (id) copyReplacingValues: (NSDictionary*) map {
@@ -20,6 +20,14 @@
     return [[[self class] alloc] initWithSubject:[self.subject copyReplacingValues:map] predicate:[self.predicate copyReplacingValues:map] object:[self.object copyReplacingValues:map] graph: [self.graph copyReplacingValues:map]];
 }
 
+
+- (id<GTWStatement>) copyWithCanonicalization {
+    id<GTWTerm,NSCopying> s   = [self.subject copyWithCanonicalization];
+    id<GTWTerm,NSCopying> p   = [self.predicate copyWithCanonicalization];
+    id<GTWTerm,NSCopying> o   = [self.object copyWithCanonicalization];
+    id<GTWTerm,NSCopying> g   = [self.graph copyWithCanonicalization];
+    return [[[self class] alloc] initWithSubject:s predicate:p object:o graph:g];
+}
 
 + (GTWQuad*) quadFromTriple: (id<GTWTriple>) t withGraph: (id<GTWTerm>) graph {
     GTWQuad* q  = [[self alloc] initWithSubject:t.subject predicate:t.predicate object:t.object graph:graph];

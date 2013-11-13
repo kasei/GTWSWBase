@@ -13,7 +13,7 @@
 
 @implementation GTWGraphIsomorphism
 
-+ (BOOL) graphEnumerator: (NSEnumerator*) a isomorphicWith: (NSEnumerator*) b reason: (NSError**) error {
++ (BOOL) graphEnumerator: (NSEnumerator*) a isomorphicWith: (NSEnumerator*) b canonicalize: (BOOL) canon reason: (NSError**) error {
     NSMutableSet* thisStatementsWithBlanks  = [NSMutableSet set];
     NSMutableSet* thatStatementsWithBlanks  = [NSMutableSet set];
     {
@@ -28,10 +28,11 @@
                 }
             }
             
+            id<GTWQuad> quad    = (canon && [q respondsToSelector:@selector(copyWithCanonicalization)]) ? [q copyWithCanonicalization] : [(NSObject*)q copy];
             if (hasBlanks) {
-                [thisStatementsWithBlanks addObject:q];
+                [thisStatementsWithBlanks addObject:quad];
             } else {
-                [thisStatementsWithoutBlanks addObject:q];
+                [thisStatementsWithoutBlanks addObject:quad];
             }
         }
         for (id<GTWQuad> q in b) {
@@ -43,10 +44,11 @@
                 }
             }
             
+            id<GTWQuad> quad    = (canon && [q respondsToSelector:@selector(copyWithCanonicalization)]) ? [q copyWithCanonicalization] : [(NSObject*)q copy];
             if (hasBlanks) {
-                [thatStatementsWithBlanks addObject:q];
+                [thatStatementsWithBlanks addObject:quad];
             } else {
-                [thatStatementsWithoutBlanks addObject:q];
+                [thatStatementsWithoutBlanks addObject:quad];
             }
         }
         

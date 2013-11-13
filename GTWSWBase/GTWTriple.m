@@ -19,6 +19,13 @@
     return [[[self class] alloc] initWithSubject:[self.subject copyReplacingValues:map] predicate:[self.predicate copyReplacingValues:map] object:[self.object copyReplacingValues:map]];
 }
 
+- (id<GTWStatement>) copyWithCanonicalization {
+    id<GTWTerm,NSCopying> s   = [self.subject copyWithCanonicalization];
+    id<GTWTerm,NSCopying> p   = [self.predicate copyWithCanonicalization];
+    id<GTWTerm,NSCopying> o   = [self.object copyWithCanonicalization];
+    return [[[self class] alloc] initWithSubject:s predicate:p object:o];
+}
+
 + (GTWTriple*) tripleFromQuad: (id<GTWQuad>) q {
     return [[GTWTriple alloc] initWithSubject:q.subject predicate:q.predicate object:q.object];
 }

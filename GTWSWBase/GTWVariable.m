@@ -6,6 +6,10 @@
     return [[[self class] alloc] initWithValue: self.value];
 }
 
+- (id<GTWTerm>) copyWithCanonicalization {
+    return [self copy];
+}
+
 - (GTWVariable*) initWithValue: (NSString*) name {
     if (self = [self init]) {
         self.value  = name;
@@ -41,6 +45,10 @@
         }
     }
     return NO;
+}
+
+- (BOOL) isValueEqual:(id<GTWTerm>)object {
+    return [self isEqual:object];
 }
 
 - (NSComparisonResult)compare:(id<GTWTerm>)term {

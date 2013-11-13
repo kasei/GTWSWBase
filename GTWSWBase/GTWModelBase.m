@@ -51,6 +51,7 @@
     return [GTWGraphIsomorphism
             graphEnumerator:[self quadsMatchingSubject:nil predicate:nil object:nil graph:nil error:nil]
             isomorphicWith:[model quadsMatchingSubject:nil predicate:nil object:nil graph:nil error:nil]
+            canonicalize:YES
             reason:nil];
 }
 

@@ -30,6 +30,14 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
     return [self copy];
 }
 
+- (id<GTWTerm>) copyWithCanonicalization {
+    if (self.datatype) {
+        return [[[self class] alloc] initWithValue: self.value datatype:self.datatype canonicalize: YES];
+    } else {
+        return [self copy];
+    }
+}
+
 - (id) copyReplacingValues: (NSDictionary*) map {
     if (map[self])
         return map[self];
@@ -61,9 +69,28 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
 }
 
 - (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype {
+    return [self initWithValue:string datatype:datatype canonicalize:NO];
+}
+
+- (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype canonicalize: (BOOL) canon {
     if (self = [self init]) {
+        NSSet* types    = [GTWLiteral supportedDatatypes];
         self.value      = string;
         self.datatype   = datatype;
+        if (canon) {
+            if ([types containsObject:datatype]) {
+                if ([self isInteger]) {
+                    self.value  = [NSString stringWithFormat:@"%ld", [self integerValue]];
+                } else if ([self isDouble]) {
+                    if ([datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
+                        double dv   = [self doubleValue];
+                        self.value  = [NSString stringWithFormat:@"%lg", dv];
+                    } else {
+                        self.value  = [NSString stringWithFormat:@"%lE", [self doubleValue]];
+                    }
+                }
+            }
+        }
     }
     return self;
 }
@@ -99,15 +126,30 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
                     return NO;
                 }
                 return YES;
-            } else if ([self isNumeric] && [object isNumeric]) {
-                if ([self isDouble] || [object isDouble]) {
-                    if ([self doubleValue] == [object doubleValue]) {
+            }
+        }
+    }
+    return NO;
+}
+
+- (BOOL) isValueEqual:(id<GTWTerm>)object {
+    if ([self isEqual:object]) {
+        return YES;
+    }
+
+    if ([object conformsToProtocol:@protocol(GTWTerm)]){
+        id<GTWTerm> term    = object;
+        if (self.termType == term.termType) {
+            id<GTWLiteral> literal  = (id<GTWLiteral>) term;
+            if ([self isNumeric] && [literal isNumeric]) {
+                if ([self isDouble] || [literal isDouble]) {
+                    if ([self doubleValue] == [literal doubleValue]) {
                         return YES;
                     } else {
                         return NO;
                     }
                 } else {
-                    if ([self integerValue] == [object integerValue]) {
+                    if ([self integerValue] == [literal integerValue]) {
                         return YES;
                     } else {
                         return NO;
@@ -191,7 +233,7 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
     return NO;
 }
 
-+ (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs {
++ (NSString*) promotedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs {
     NSSet* datatypes    = [NSSet setWithObjects:lhs, rhs, nil];
     if ([datatypes containsObject:@"http://www.w3.org/2001/XMLSchema#double"]) {
         return @"http://www.w3.org/2001/XMLSchema#double";
@@ -201,13 +243,17 @@ static NSString* INTEGER_PATTERN = @"http://www.w3.org/2001/XMLSchema#(byte|int|
         return @"http://www.w3.org/2001/XMLSchema#decimal";
     } else {
         NSSet* supported    = [self supportedDatatypes];
-        for (NSString* type in supported) {
+//        NSLog(@"checking types %@", datatypes);
+//        NSLog(@"supported datatypes: %@", supported);
+        for (NSString* type in datatypes) {
             if ([type hasPrefix:@"http://www.w3.org/2001/XMLSchema#date"]) {
+//                NSLog(@"date types cannot be promoted");
                 return nil;
-            } else if ([datatypes containsObject:type]) {
+            } else if ([supported containsObject:type]) {
                 return @"http://www.w3.org/2001/XMLSchema#integer";
             }
         }
+//        NSLog(@"neither datatype is recognized");
         return nil;
     }
 }

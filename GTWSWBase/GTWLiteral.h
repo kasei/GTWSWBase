@@ -12,11 +12,12 @@
 + (GTWLiteral*) falseLiteral;
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value;
 + (GTWLiteral*) doubleLiteralWithValue: (double) value;
-+ (NSString*) promtedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs;
++ (NSString*) promotedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs;
 
 - (GTWLiteral*) initWithValue: (NSString*) string;
 - (GTWLiteral*) initWithValue: (NSString*) string language: (NSString*) language;
 - (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype;
+- (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype canonicalize: (BOOL) canon;
 
 - (BOOL) booleanValue;
 - (NSInteger) integerValue;

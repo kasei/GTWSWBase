@@ -10,10 +10,11 @@
 
 @protocol GTWRewriteable <NSObject>
 - (id) copyReplacingValues: (NSDictionary*) map;
+- (id) copyWithCanonicalization;
 @end
 
 
-@protocol GTWTerm <NSObject, GTWRewriteable,NSCopying>
+@protocol GTWTerm <NSObject,GTWRewriteable,NSCopying>
 /// The type of an Term object (including RDF Term types as well as variables)
 typedef NS_ENUM(NSInteger, GTWTermType) {
     GTWTermIRI,
@@ -30,6 +31,10 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 - (GTWTermType) termType;
 - (BOOL) effectiveBooleanValueWithError: (NSError**) error;
 
+/**
+ Returns a Boolean value that indicates whether the receiver and a given object have values that are equal in their respective value-space.
+ */
+- (BOOL) isValueEqual:(id<GTWTerm>)object;
 /**
  @return The lexical value of the RDF Term.
  */
@@ -75,6 +80,8 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
  @return @c YES if the RDF Term is a recognized XSD numeric type. @c FALSE otherwise.
  */
 - (BOOL) isNumeric;
+- (BOOL) isDouble;
+- (BOOL) isInteger;
 
 /**
  @return @c YES if the RDF Term is a xsd:boolean literal and true. @c NO otherwise.
@@ -102,7 +109,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 @end
 
 
-@protocol GTWStatement <NSObject>
+@protocol GTWStatement <NSObject,GTWRewriteable>
 /**
  @return An array of the subject, predicate, and object RDF Term objects.
  */
