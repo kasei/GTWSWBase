@@ -44,6 +44,12 @@
 		371391D3180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */; };
 		3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */ = {isa = PBXBuildFile; fileRef = 3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3786AA2117F0F686008663E9 /* GTWGraphIsomorphism.m in Sources */ = {isa = PBXBuildFile; fileRef = 3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */; };
+		37B6359718343CB5006D15C0 /* IRI.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6359518343CB5006D15C0 /* IRI.h */; };
+		37B6359818343CB5006D15C0 /* IRI.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B6359618343CB5006D15C0 /* IRI.m */; };
+		37B6359F183493DD006D15C0 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6359D183493DD006D15C0 /* RegexKitLite.h */; };
+		37B635A0183493DD006D15C0 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B6359E183493DD006D15C0 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		37B635A218349449006D15C0 /* libpcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B635A118349449006D15C0 /* libpcre.dylib */; };
+		37B635A41834946E006D15C0 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B635A31834946E006D15C0 /* libicucore.dylib */; };
 		37C4DA481821F71100F31863 /* GTWSPARQLResultsJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37C4DA491821F71100F31863 /* GTWSPARQLResultsJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */; };
 		37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -97,6 +103,12 @@
 		371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWSPARQLResultsXMLParser.m; sourceTree = "<group>"; };
 		3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWGraphIsomorphism.h; sourceTree = "<group>"; };
 		3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWGraphIsomorphism.m; sourceTree = "<group>"; };
+		37B6359518343CB5006D15C0 /* IRI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRI.h; sourceTree = "<group>"; };
+		37B6359618343CB5006D15C0 /* IRI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRI.m; sourceTree = "<group>"; };
+		37B6359D183493DD006D15C0 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		37B6359E183493DD006D15C0 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
+		37B635A118349449006D15C0 /* libpcre.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcre.dylib; path = usr/lib/libpcre.dylib; sourceTree = SDKROOT; };
+		37B635A31834946E006D15C0 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWSPARQLResultsJSONParser.h; sourceTree = "<group>"; };
 		37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWSPARQLResultsJSONParser.m; sourceTree = "<group>"; };
 		37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWBlockEnumerator.h; sourceTree = "<group>"; };
@@ -108,6 +120,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37B635A41834946E006D15C0 /* libicucore.dylib in Frameworks */,
+				37B635A218349449006D15C0 /* libpcre.dylib in Frameworks */,
 				3710918817A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +161,8 @@
 		3710918617A9B8FB00BFAF43 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37B635A31834946E006D15C0 /* libicucore.dylib */,
+				37B635A118349449006D15C0 /* libpcre.dylib */,
 				3710918717A9B8FB00BFAF43 /* Cocoa.framework */,
 				3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */,
 				3710918917A9B8FB00BFAF43 /* Other Frameworks */,
@@ -253,6 +269,10 @@
 				37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */,
 				3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */,
 				3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */,
+				37B6359518343CB5006D15C0 /* IRI.h */,
+				37B6359618343CB5006D15C0 /* IRI.m */,
+				37B6359D183493DD006D15C0 /* RegexKitLite.h */,
+				37B6359E183493DD006D15C0 /* RegexKitLite.m */,
 			);
 			name = "Utility Classes";
 			sourceTree = "<group>";
@@ -274,12 +294,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */,
+				37B6359718343CB5006D15C0 /* IRI.h in Headers */,
 				371091D017AA8D3500BFAF43 /* GTWModelBase.h in Headers */,
 				371091C417AA8D3500BFAF43 /* GTWBlank.h in Headers */,
 				371091C717AA8D3500BFAF43 /* GTWDataset.h in Headers */,
 				371091CA17AA8D3500BFAF43 /* GTWIRI.h in Headers */,
 				371091CD17AA8D3500BFAF43 /* GTWLiteral.h in Headers */,
 				371091D317AA8D3500BFAF43 /* GTWQuad.h in Headers */,
+				37B6359F183493DD006D15C0 /* RegexKitLite.h in Headers */,
 				37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */,
 				371091D617AA8D3500BFAF43 /* GTWTriple.h in Headers */,
 				3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */,
@@ -396,11 +418,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37B635A0183493DD006D15C0 /* RegexKitLite.m in Sources */,
 				371091C517AA8D3500BFAF43 /* GTWBlank.m in Sources */,
 				371091C817AA8D3500BFAF43 /* GTWDataset.m in Sources */,
 				371091CB17AA8D3500BFAF43 /* GTWIRI.m in Sources */,
 				371091CE17AA8D3500BFAF43 /* GTWLiteral.m in Sources */,
 				371091D117AA8D3500BFAF43 /* GTWModelBase.m in Sources */,
+				37B6359818343CB5006D15C0 /* IRI.m in Sources */,
 				37C4DA491821F71100F31863 /* GTWSPARQLResultsJSONParser.m in Sources */,
 				371091D417AA8D3500BFAF43 /* GTWQuad.m in Sources */,
 				371391D2180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */,
@@ -520,12 +544,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GTWSWBase/GTWSWBase-Prefix.pch";
 				INFOPLIST_FILE = "GTWSWBase/GTWSWBase-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -535,12 +562,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GTWSWBase/GTWSWBase-Prefix.pch";
 				INFOPLIST_FILE = "GTWSWBase/GTWSWBase-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
