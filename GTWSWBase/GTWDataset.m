@@ -3,6 +3,13 @@
 
 @implementation GTWDataset
 
++ (GTWDataset*) datasetFromDataset: (GTWDataset*) dataset withDefaultGraphs: (NSArray*) defaultGraphs {
+    GTWDataset* ds  = [[self alloc] initDatasetWithDefaultGraphs: defaultGraphs];
+    ds.availabilityType = dataset.availabilityType;
+    ds.graphs           = dataset.graphs;
+    return ds;
+}
+
 - (GTWDataset*) initDatasetWithDefaultGraphs: (NSArray*) defaultGraphs {
     if (self = [super init]) {
         self.availabilityType   = GTWFullDataset;
