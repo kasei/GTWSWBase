@@ -34,8 +34,7 @@
 		37B6359818343CB5006D15C0 /* IRI.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B6359618343CB5006D15C0 /* IRI.m */; };
 		37B6359F183493DD006D15C0 /* RegexKitLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6359D183493DD006D15C0 /* RegexKitLite.h */; };
 		37B635A0183493DD006D15C0 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 37B6359E183493DD006D15C0 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		37B635A218349449006D15C0 /* libpcre.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B635A118349449006D15C0 /* libpcre.dylib */; };
-		37B635A41834946E006D15C0 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B635A31834946E006D15C0 /* libicucore.dylib */; };
+		37B635A5183553BF006D15C0 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B635A31834946E006D15C0 /* libicucore.dylib */; };
 		37C4DA481821F71100F31863 /* GTWSPARQLResultsJSONParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37C4DA491821F71100F31863 /* GTWSPARQLResultsJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */; };
 		37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -94,8 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37B635A41834946E006D15C0 /* libicucore.dylib in Frameworks */,
-				37B635A218349449006D15C0 /* libpcre.dylib in Frameworks */,
+				37B635A5183553BF006D15C0 /* libicucore.dylib in Frameworks */,
 				3710918817A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
