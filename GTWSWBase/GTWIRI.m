@@ -1,4 +1,5 @@
 #import "GTWIRI.h"
+#import "IRI.h"
 
 @implementation GTWIRI
 
@@ -30,15 +31,24 @@
             NSLog(@"Undefined base URI passed to GTWIRI initWithIRI:base:");
             return nil;
         }
-        NSURL* baseurl  = [[NSURL alloc] initWithString:baseuri];
-        NSURL* url  = [[NSURL alloc] initWithString:iri relativeToURL:baseurl];
-        self.value  = [url absoluteString];
+        
+        IRI* bi = base ? [[IRI alloc] initWithValue:base.value relativeToIRI:nil] : nil;
+        IRI* i  = [[IRI alloc] initWithValue:iri relativeToIRI:bi];
+        self.value  = [i absoluteString];
+        
+//        NSURL* baseurl  = [[NSURL alloc] initWithString:baseuri];
+//        NSURL* url  = [[NSURL alloc] initWithString:iri relativeToURL:baseurl];
+//        self.value  = [url absoluteString];
         if (!self.value) {
             NSLog(@"failed to create IRI: <%@> with base %@", iri, base);
             return nil;
         }
     }
     return self;
+}
+
+- (GTWIRI*) initWithValue: (NSString*) iri relativeToIRI: (GTWIRI*) base {
+    return [self initWithValue:iri relativeToIRI:base];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
