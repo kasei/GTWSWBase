@@ -241,7 +241,10 @@
         // TODO: re-combine the target components
         
 //        NSLog(@"target components: %@", target);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
         [self initWithComponents:target];
+#pragma clang diagnostic pop
     }
 //    NSLog(@"====> %@", _iriString);
     return _iriString;
