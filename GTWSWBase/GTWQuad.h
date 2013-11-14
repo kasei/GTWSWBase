@@ -3,7 +3,7 @@
 #import "GTWSWBase.h"
 #import "GTWTriple.h"
 
-@interface GTWQuad : GTWTriple<GTWQuad,GTWRewriteable, NSCopying>
+@interface GTWQuad : NSObject<GTWQuad,GTWRewriteable, NSCopying>
 
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;
