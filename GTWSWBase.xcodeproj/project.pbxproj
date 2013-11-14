@@ -9,39 +9,25 @@
 /* Begin PBXBuildFile section */
 		3710918817A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918717A9B8FB00BFAF43 /* Cocoa.framework */; };
 		3710919217A9B8FB00BFAF43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3710919017A9B8FB00BFAF43 /* InfoPlist.strings */; };
-		3710919E17A9B8FB00BFAF43 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */; };
-		3710919F17A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918717A9B8FB00BFAF43 /* Cocoa.framework */; };
-		371091A217A9B8FB00BFAF43 /* GTWSWBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */; };
-		371091A817A9B8FB00BFAF43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 371091A617A9B8FB00BFAF43 /* InfoPlist.strings */; };
-		371091AB17A9B8FB00BFAF43 /* GTWSWBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091AA17A9B8FB00BFAF43 /* GTWSWBaseTests.m */; };
 		371091C417AA8D3500BFAF43 /* GTWBlank.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B417AA8D3400BFAF43 /* GTWBlank.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091C517AA8D3500BFAF43 /* GTWBlank.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B517AA8D3400BFAF43 /* GTWBlank.m */; };
-		371091C617AA8D3500BFAF43 /* GTWBlank.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B517AA8D3400BFAF43 /* GTWBlank.m */; };
 		371091C717AA8D3500BFAF43 /* GTWDataset.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B617AA8D3400BFAF43 /* GTWDataset.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091C817AA8D3500BFAF43 /* GTWDataset.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B717AA8D3400BFAF43 /* GTWDataset.m */; };
-		371091C917AA8D3500BFAF43 /* GTWDataset.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B717AA8D3400BFAF43 /* GTWDataset.m */; };
 		371091CA17AA8D3500BFAF43 /* GTWIRI.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B817AA8D3400BFAF43 /* GTWIRI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091CB17AA8D3500BFAF43 /* GTWIRI.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B917AA8D3400BFAF43 /* GTWIRI.m */; };
-		371091CC17AA8D3500BFAF43 /* GTWIRI.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B917AA8D3400BFAF43 /* GTWIRI.m */; };
 		371091CD17AA8D3500BFAF43 /* GTWLiteral.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091BA17AA8D3400BFAF43 /* GTWLiteral.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091CE17AA8D3500BFAF43 /* GTWLiteral.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BB17AA8D3400BFAF43 /* GTWLiteral.m */; };
-		371091CF17AA8D3500BFAF43 /* GTWLiteral.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BB17AA8D3400BFAF43 /* GTWLiteral.m */; };
 		371091D017AA8D3500BFAF43 /* GTWModelBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091BC17AA8D3400BFAF43 /* GTWModelBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091D117AA8D3500BFAF43 /* GTWModelBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BD17AA8D3400BFAF43 /* GTWModelBase.m */; };
-		371091D217AA8D3500BFAF43 /* GTWModelBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BD17AA8D3400BFAF43 /* GTWModelBase.m */; };
 		371091D317AA8D3500BFAF43 /* GTWQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091BE17AA8D3400BFAF43 /* GTWQuad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091D417AA8D3500BFAF43 /* GTWQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BF17AA8D3400BFAF43 /* GTWQuad.m */; };
-		371091D517AA8D3500BFAF43 /* GTWQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091BF17AA8D3400BFAF43 /* GTWQuad.m */; };
 		371091D617AA8D3500BFAF43 /* GTWTriple.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091C017AA8D3400BFAF43 /* GTWTriple.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091D717AA8D3500BFAF43 /* GTWTriple.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C117AA8D3500BFAF43 /* GTWTriple.m */; };
-		371091D817AA8D3500BFAF43 /* GTWTriple.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C117AA8D3500BFAF43 /* GTWTriple.m */; };
 		371091D917AA8D3500BFAF43 /* GTWVariable.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091C217AA8D3500BFAF43 /* GTWVariable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091DA17AA8D3500BFAF43 /* GTWVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C317AA8D3500BFAF43 /* GTWVariable.m */; };
-		371091DB17AA8D3500BFAF43 /* GTWVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091C317AA8D3500BFAF43 /* GTWVariable.m */; };
 		371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3710919417A9B8FB00BFAF43 /* GTWSWBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371391D1180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 371391CF180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371391D2180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */; };
-		371391D3180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */; };
 		3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */ = {isa = PBXBuildFile; fileRef = 3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3786AA2117F0F686008663E9 /* GTWGraphIsomorphism.m in Sources */ = {isa = PBXBuildFile; fileRef = 3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */; };
 		37B6359718343CB5006D15C0 /* IRI.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6359518343CB5006D15C0 /* IRI.h */; };
@@ -54,18 +40,7 @@
 		37C4DA491821F71100F31863 /* GTWSPARQLResultsJSONParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */; };
 		37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 37F96DB817ACF86700235009 /* GTWBlockEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37F96DBB17ACF86700235009 /* GTWBlockEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */; };
-		37F96DBC17ACF86700235009 /* GTWBlockEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F96DB917ACF86700235009 /* GTWBlockEnumerator.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		371091A017A9B8FB00BFAF43 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3710917B17A9B8FB00BFAF43 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3710918317A9B8FB00BFAF43;
-			remoteInfo = GTWSWBase;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTWSWBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +52,6 @@
 		3710919117A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3710919317A9B8FB00BFAF43 /* GTWSWBase-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTWSWBase-Prefix.pch"; sourceTree = "<group>"; };
 		3710919417A9B8FB00BFAF43 /* GTWSWBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTWSWBase.h; sourceTree = "<group>"; wrapsLines = 1; };
-		3710919C17A9B8FB00BFAF43 /* GTWSWBaseTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GTWSWBaseTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		371091A517A9B8FB00BFAF43 /* GTWSWBaseTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTWSWBaseTests-Info.plist"; sourceTree = "<group>"; };
 		371091A717A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -126,16 +100,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3710919817A9B8FB00BFAF43 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3710919E17A9B8FB00BFAF43 /* SenTestingKit.framework in Frameworks */,
-				3710919F17A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */,
-				371091A217A9B8FB00BFAF43 /* GTWSWBase.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -153,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */,
-				3710919C17A9B8FB00BFAF43 /* GTWSWBaseTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -332,25 +295,6 @@
 			productReference = 3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		3710919B17A9B8FB00BFAF43 /* GTWSWBaseTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 371091B117A9B8FB00BFAF43 /* Build configuration list for PBXNativeTarget "GTWSWBaseTests" */;
-			buildPhases = (
-				3710919717A9B8FB00BFAF43 /* Sources */,
-				3710919817A9B8FB00BFAF43 /* Frameworks */,
-				3710919917A9B8FB00BFAF43 /* Resources */,
-				3710919A17A9B8FB00BFAF43 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				371091A117A9B8FB00BFAF43 /* PBXTargetDependency */,
-			);
-			name = GTWSWBaseTests;
-			productName = GTWSWBaseTests;
-			productReference = 3710919C17A9B8FB00BFAF43 /* GTWSWBaseTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -373,7 +317,6 @@
 			projectRoot = "";
 			targets = (
 				3710918317A9B8FB00BFAF43 /* GTWSWBase */,
-				3710919B17A9B8FB00BFAF43 /* GTWSWBaseTests */,
 			);
 		};
 /* End PBXProject section */
@@ -387,31 +330,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3710919917A9B8FB00BFAF43 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				371091A817A9B8FB00BFAF43 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		3710919A17A9B8FB00BFAF43 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3710917F17A9B8FB00BFAF43 /* Sources */ = {
@@ -435,33 +354,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3710919717A9B8FB00BFAF43 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				371091AB17A9B8FB00BFAF43 /* GTWSWBaseTests.m in Sources */,
-				371091C617AA8D3500BFAF43 /* GTWBlank.m in Sources */,
-				371091C917AA8D3500BFAF43 /* GTWDataset.m in Sources */,
-				371091CC17AA8D3500BFAF43 /* GTWIRI.m in Sources */,
-				371091CF17AA8D3500BFAF43 /* GTWLiteral.m in Sources */,
-				371091D217AA8D3500BFAF43 /* GTWModelBase.m in Sources */,
-				371391D3180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */,
-				371091D517AA8D3500BFAF43 /* GTWQuad.m in Sources */,
-				371091D817AA8D3500BFAF43 /* GTWTriple.m in Sources */,
-				371091DB17AA8D3500BFAF43 /* GTWVariable.m in Sources */,
-				37F96DBC17ACF86700235009 /* GTWBlockEnumerator.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		371091A117A9B8FB00BFAF43 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3710918317A9B8FB00BFAF43 /* GTWSWBase */;
-			targetProxy = 371091A017A9B8FB00BFAF43 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3710919017A9B8FB00BFAF43 /* InfoPlist.strings */ = {
@@ -576,32 +469,6 @@
 			};
 			name = Release;
 		};
-		371091B217A9B8FB00BFAF43 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GTWSWBase/GTWSWBase-Prefix.pch";
-				INFOPLIST_FILE = "GTWSWBaseTests/GTWSWBaseTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		371091B317A9B8FB00BFAF43 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GTWSWBase/GTWSWBase-Prefix.pch";
-				INFOPLIST_FILE = "GTWSWBaseTests/GTWSWBaseTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -619,15 +486,6 @@
 			buildConfigurations = (
 				371091AF17A9B8FB00BFAF43 /* Debug */,
 				371091B017A9B8FB00BFAF43 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		371091B117A9B8FB00BFAF43 /* Build configuration list for PBXNativeTarget "GTWSWBaseTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				371091B217A9B8FB00BFAF43 /* Debug */,
-				371091B317A9B8FB00BFAF43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
