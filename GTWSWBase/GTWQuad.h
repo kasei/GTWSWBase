@@ -1,8 +1,9 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSKeyValueCoding.h>
 #import "GTWSWBase.h"
+#import "GTWTriple.h"
 
-@interface GTWQuad : NSObject<GTWQuad,GTWRewriteable, NSCopying>
+@interface GTWQuad : GTWTriple<GTWQuad,GTWRewriteable, NSCopying>
 
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;
