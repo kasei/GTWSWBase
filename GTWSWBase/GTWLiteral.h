@@ -13,17 +13,12 @@
 + (GTWLiteral*) falseLiteral;
 + (GTWLiteral*) integerLiteralWithValue: (NSInteger) value;
 + (GTWLiteral*) doubleLiteralWithValue: (double) value;
++ (GTWLiteral*) decimalLiteralWithValue: (double) value;
 + (NSString*) promotedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs;
 
 - (GTWLiteral*) initWithValue: (NSString*) string;
 - (GTWLiteral*) initWithValue: (NSString*) string language: (NSString*) language;
 - (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype;
 - (GTWLiteral*) initWithValue: (NSString*) string datatype: (NSString*) datatype canonicalize: (BOOL) canon;
-
-- (BOOL) booleanValue;
-- (NSInteger) integerValue;
-- (double) doubleValue;
-- (BOOL) isSimpleLiteral;
-- (BOOL) isArgumentCompatibileWith: (id<GTWLiteral>) literal;
 
 @end

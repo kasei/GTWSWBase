@@ -1,7 +1,5 @@
 #import "GTWLiteral.h"
-
-static NSString* INTEGER_PATTERN    = @"http://www.w3.org/2001/XMLSchema#(byte|int|integer|long|short|nonPositiveInteger|nonNegativeInteger|unsignedLong|unsignedInt|unsignedShort|unsignedByte|positiveInteger|negativeInteger)";
-static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([+]|-)\\d\\d:\\d\\d)|Z)?";
+#import "NSObject+GTWTerm.h"
 
 @implementation GTWLiteral
 
@@ -69,6 +67,10 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
     return [[GTWLiteral alloc] initWithValue:[NSString stringWithFormat:@"%lE", value] datatype:@"http://www.w3.org/2001/XMLSchema#double"];
 }
 
++ (GTWLiteral*) decimalLiteralWithValue: (double) value {
+    return [[GTWLiteral alloc] initWithValue:[NSString stringWithFormat:@"%lf", value] datatype:@"http://www.w3.org/2001/XMLSchema#decimal"];
+}
+
 - (GTWLiteral*) initWithValue: (NSString*) string {
     if (self = [self init]) {
         self.value  = string;
@@ -96,9 +98,9 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
         self.datatype   = datatype;
         if (canon) {
             if ([types containsObject:datatype]) {
-                if ([self isInteger]) {
+                if ([self isIntegerLiteral]) {
                     self.value  = [NSString stringWithFormat:@"%ld", [self integerValue]];
-                } else if ([self isDouble]) {
+                } else if ([self isDoubleLiteral]) {
                     if ([datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
                         double dv   = [self doubleValue];
                         self.value  = [NSString stringWithFormat:@"%lg", dv];
@@ -158,8 +160,8 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
         id<GTWTerm> term    = object;
         if (self.termType == term.termType) {
             id<GTWLiteral> literal  = (id<GTWLiteral>) term;
-            if ([self isNumeric] && [literal isNumeric]) {
-                if ([self isDouble] || [literal isDouble]) {
+            if ([self isNumericLiteral] && [literal isNumericLiteral]) {
+                if ([self isDoubleLiteral] || [literal isDoubleLiteral]) {
                     if ([self doubleValue] == [literal doubleValue]) {
                         return YES;
                     } else {
@@ -185,7 +187,7 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
     return NO;
 }
 
-+ (BOOL) literal: (id<GTWLiteral>) l isComparableWith: (id<GTWLiteral>) term {
++ (BOOL) literal: (NSObject<GTWLiteral>*) l isComparableWith: (id<GTWLiteral>) term {
     if (!term)
         return NO;
     if (l.termType != term.termType) {
@@ -194,14 +196,14 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
         id<GTWLiteral> literal  = (id<GTWLiteral>) term;
         if (!l.datatype && !term.datatype) {
             return YES;
-        } else if ([l isNumeric] && [literal isNumeric]) {
-            if ([l isInteger]) {
-                if (![(GTWLiteral*)l isValidLexicalInteger]) {
+        } else if ([l isNumericLiteral] && [literal isNumericLiteral]) {
+            if ([l isIntegerLiteral]) {
+                if (![l isValidLexicalInteger]) {
                     return NO;
                 }
             }
-            if ([l isDouble]) {
-                if (![(GTWLiteral*)l isValidLexicalDouble]) {
+            if ([l isDoubleLiteral]) {
+                if (![l isValidLexicalDouble]) {
                     return NO;
                 }
             }
@@ -240,7 +242,7 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
         NSComparisonResult cmp;
         if (!self.datatype && !term.datatype) {
             return [self.value compare:term.value];
-        } else if ([self isNumeric] && [literal isNumeric]) {
+        } else if ([self isNumericLiteral] && [literal isNumericLiteral]) {
             double sv   = [self doubleValue];
             double lv   = [literal doubleValue];
             if (sv < lv) {
@@ -284,106 +286,8 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
     return NSOrderedSame;
 }
 
-- (NSDictionary*) xsdDateComponents {
-    NSRegularExpression* re = [NSRegularExpression regularExpressionWithPattern:XSD_DATE_PATTERN options:0 error:nil];
-    NSTextCheckingResult* r = [re firstMatchInString:self.value options:0 range:NSMakeRange(0, [self.value length])];
-    NSRange signrange       = [r rangeAtIndex: 1];
-    NSRange yearrange       = [r rangeAtIndex: 2];
-    NSRange monthrange      = [r rangeAtIndex: 3];
-    NSRange dayrange        = [r rangeAtIndex: 4];
-    NSRange tzrange         = [r rangeAtIndex: 5];
-    
-    NSString* tz    = @"";
-    if (tzrange.location != NSNotFound) {
-        tz  = [self.value substringWithRange:tzrange];
-        if ([tz isEqual: @"Z"]) {
-            tz  = @"+00:00";
-        } else if ([tz isEqual: @"-00:00"]) {
-            tz  = @"+00:00";
-        } else if ([tz isEqual: @"00:00"]) {
-            tz  = @"+00:00";
-        }
-    }
-    return @{
-             @"sign": [self.value substringWithRange:signrange],
-             @"year": [self.value substringWithRange:yearrange],
-             @"month": [self.value substringWithRange:monthrange],
-             @"day": [self.value substringWithRange:dayrange],
-             @"tz": tz,
-             };
-    
-}
-
-- (BOOL) isValidLexicalInteger {
-    if (![self isInteger])
-        return NO;
-    NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+" options:NSRegularExpressionSearch];
-    if (range.location == 0 && range.length == [self.value length]) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-- (BOOL) isValidLexicalDouble {
-    if (![self isDouble])
-        return NO;
-    // TODO: Check lexical form
-    if ([self.datatype isEqual:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
-        NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+([.]\\d+)?" options:NSRegularExpressionSearch];
-        if (range.location == 0 && range.length == [self.value length])
-            return YES;
-    } else {
-        // xsd:float or xsd:double
-        // TODO: We don't handle Inf or NaN here because we're using this function to know if we can use the double values in comparisons.
-        NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+([.]\\d+([eE]([+]|-)?\\d+)?)?" options:NSRegularExpressionSearch];
-        if (range.location == 0 && range.length == [self.value length])
-            return YES;
-    }
-    return NO;
-}
-
-- (BOOL) isValidXSDDate {
-    if (!self.datatype)
-        return NO;
-    if (![self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#date"])
-        return NO;
-    NSRange range       = [self.value rangeOfString:XSD_DATE_PATTERN options:NSRegularExpressionSearch];
-    if (range.location == 0 && range.length == [self.value length])
-        return YES;
-    return NO;
-}
-
 - (NSUInteger)hash {
     return [[self.value description] hash];
-}
-
-- (BOOL) isInteger {
-    if (!self.datatype)
-        return NO;
-    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0)
-        return YES;
-    return NO;
-}
-
-- (BOOL) isDouble {
-    if (!self.datatype)
-        return NO;
-    if ([self.datatype rangeOfString:@"http://www.w3.org/2001/XMLSchema#(decimal|double|float)" options:NSRegularExpressionSearch].location == 0)
-        return YES;
-    return NO;
-}
-
-- (BOOL) isNumeric {
-//    NSLog(@"isNumeric? %@", self.datatype);
-    if (!self.datatype)
-        return NO;
-    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
-        return YES;
-    } else if ([self.datatype rangeOfString:@"http://www.w3.org/2001/XMLSchema#(decimal|double|float)" options:NSRegularExpressionSearch].location == 0) {
-        return YES;
-    }
-    return NO;
 }
 
 + (NSString*) promotedTypeForNumericTypes: (NSString*) lhs and: (NSString*) rhs {
@@ -415,107 +319,6 @@ static NSString* XSD_DATE_PATTERN   = @"(-?)(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)((([
     } else {
         return [self.value isEqualToString:@"true"];
     }
-}
-
-- (NSInteger) integerValue {
-    if (!self.datatype)
-        return 0;
-    if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
-        long long value = atoll([self.value UTF8String]);
-        return (NSInteger) value;
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
-        return (NSInteger) [self doubleValue];
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"]) {
-        return (NSInteger) [self doubleValue];
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
-        return (NSInteger) [self doubleValue];
-    } else {
-        return 0;
-    }
-}
-
-- (double) doubleValue {
-    if (!self.datatype)
-        return 0.0;
-    if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#double"] || [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
-        NSDecimalNumber *decNumber = [NSDecimalNumber decimalNumberWithString:self.value];
-        return [decNumber doubleValue];
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#decimal"]) {
-        double v;
-        sscanf([self.value UTF8String], "%lE", &v);
-        return v;
-    } else if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#float"]) {
-            float v;
-            sscanf([self.value UTF8String], "%f", &v);
-            return (double) v;
-    } else if ([self.datatype rangeOfString:INTEGER_PATTERN options:NSRegularExpressionSearch].location == 0) {
-        return (double) [self integerValue];
-    } else {
-        return 0.0;
-    }
-}
-
-- (BOOL) isSimpleLiteral {
-    if (self.datatype && ![self.datatype isEqual: @"http://www.w3.org/2001/XMLSchema#string"]) {
-        return NO;
-    }
-    if (self.language) {
-        return NO;
-    }
-    return YES;
-}
-
-- (BOOL) isArgumentCompatibileWith: (id<GTWLiteral>) literal {
-    //Compatibility of two arguments is defined as:
-    //
-    //The arguments are simple literals or literals typed as xsd:string
-    if ([self isSimpleLiteral] && [literal isSimpleLiteral]) {
-        return YES;
-    }
-
-    //The arguments are plain literals with identical language tags
-    if (self.language && literal.language && [self.language isEqual: literal.language]) {
-        return YES;
-    }
-    
-    //The first argument is a plain literal with language tag and the second argument is a simple literal or literal typed as xsd:string
-    if (self.language && [literal isSimpleLiteral]) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (BOOL) effectiveBooleanValueWithError: (NSError**) error {
-    if (self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#boolean"]) {
-        BOOL ebv    = [self booleanValue];
-        return ebv;
-    } else if ((self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#string"]) || (self.datatype && [self.datatype isEqualToString:@"http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"]) || [self isSimpleLiteral]) {
-        if ([self.value length] == 0) {
-            return NO;
-        } else {
-            return YES;
-        }
-    } else if ([self isNumeric]) {
-        NSInteger ivalue    = [self integerValue];
-        if (ivalue != 0) {
-            return YES;
-        } else {
-            double value    = [self doubleValue];
-            if (value == 0.0L) {
-                return NO;
-            } else {
-                return YES;
-            }
-        }
-//    } else {
-//        NSLog(@"EBV of unexpected value: %@", self);
-    }
-    
-    if (error) {
-        *error  =  [NSError errorWithDomain:@"us.kasei.swbase.ebv" code:1 userInfo:@{@"description": @"EBV TypeError"}];
-    }
-    return NO;
 }
 
 @end

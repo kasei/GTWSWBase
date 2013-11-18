@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3710918817A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3710918717A9B8FB00BFAF43 /* Cocoa.framework */; };
 		3710919217A9B8FB00BFAF43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3710919017A9B8FB00BFAF43 /* InfoPlist.strings */; };
 		371091C417AA8D3500BFAF43 /* GTWBlank.h in Headers */ = {isa = PBXBuildFile; fileRef = 371091B417AA8D3400BFAF43 /* GTWBlank.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371091C517AA8D3500BFAF43 /* GTWBlank.m in Sources */ = {isa = PBXBuildFile; fileRef = 371091B517AA8D3400BFAF43 /* GTWBlank.m */; };
@@ -28,6 +27,8 @@
 		371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3710919417A9B8FB00BFAF43 /* GTWSWBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371391D1180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 371391CF180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		371391D2180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */; };
+		377C2B2E1835A8E000F4171E /* NSObject+GTWTerm.h in Headers */ = {isa = PBXBuildFile; fileRef = 377C2B2C1835A8E000F4171E /* NSObject+GTWTerm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		377C2B2F1835A8E000F4171E /* NSObject+GTWTerm.m in Sources */ = {isa = PBXBuildFile; fileRef = 377C2B2D1835A8E000F4171E /* NSObject+GTWTerm.m */; };
 		3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */ = {isa = PBXBuildFile; fileRef = 3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3786AA2117F0F686008663E9 /* GTWGraphIsomorphism.m in Sources */ = {isa = PBXBuildFile; fileRef = 3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */; };
 		37B6359718343CB5006D15C0 /* IRI.h in Headers */ = {isa = PBXBuildFile; fileRef = 37B6359518343CB5006D15C0 /* IRI.h */; };
@@ -43,15 +44,11 @@
 
 /* Begin PBXFileReference section */
 		3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTWSWBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3710918717A9B8FB00BFAF43 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		3710918A17A9B8FB00BFAF43 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		3710918B17A9B8FB00BFAF43 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		3710918C17A9B8FB00BFAF43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3710918F17A9B8FB00BFAF43 /* GTWSWBase-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTWSWBase-Info.plist"; sourceTree = "<group>"; };
 		3710919117A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3710919317A9B8FB00BFAF43 /* GTWSWBase-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTWSWBase-Prefix.pch"; sourceTree = "<group>"; };
 		3710919417A9B8FB00BFAF43 /* GTWSWBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTWSWBase.h; sourceTree = "<group>"; wrapsLines = 1; };
-		3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		371091A517A9B8FB00BFAF43 /* GTWSWBaseTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTWSWBaseTests-Info.plist"; sourceTree = "<group>"; };
 		371091A717A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		371091A917A9B8FB00BFAF43 /* GTWSWBaseTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTWSWBaseTests.h; sourceTree = "<group>"; };
@@ -74,13 +71,14 @@
 		371091C317AA8D3500BFAF43 /* GTWVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWVariable.m; sourceTree = "<group>"; };
 		371391CF180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWSPARQLResultsXMLParser.h; sourceTree = "<group>"; };
 		371391D0180DC74E002D0535 /* GTWSPARQLResultsXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWSPARQLResultsXMLParser.m; sourceTree = "<group>"; };
+		377C2B2C1835A8E000F4171E /* NSObject+GTWTerm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+GTWTerm.h"; sourceTree = "<group>"; };
+		377C2B2D1835A8E000F4171E /* NSObject+GTWTerm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+GTWTerm.m"; sourceTree = "<group>"; };
 		3786AA1E17F0F686008663E9 /* GTWGraphIsomorphism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWGraphIsomorphism.h; sourceTree = "<group>"; };
 		3786AA1F17F0F686008663E9 /* GTWGraphIsomorphism.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWGraphIsomorphism.m; sourceTree = "<group>"; };
 		37B6359518343CB5006D15C0 /* IRI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRI.h; sourceTree = "<group>"; };
 		37B6359618343CB5006D15C0 /* IRI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRI.m; sourceTree = "<group>"; };
 		37B6359D183493DD006D15C0 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
 		37B6359E183493DD006D15C0 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
-		37B635A118349449006D15C0 /* libpcre.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpcre.dylib; path = usr/lib/libpcre.dylib; sourceTree = SDKROOT; };
 		37B635A31834946E006D15C0 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		37C4DA461821F71100F31863 /* GTWSPARQLResultsJSONParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTWSPARQLResultsJSONParser.h; sourceTree = "<group>"; };
 		37C4DA471821F71100F31863 /* GTWSPARQLResultsJSONParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTWSPARQLResultsJSONParser.m; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				37B635A5183553BF006D15C0 /* libicucore.dylib in Frameworks */,
-				3710918817A9B8FB00BFAF43 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,22 +120,9 @@
 			isa = PBXGroup;
 			children = (
 				37B635A31834946E006D15C0 /* libicucore.dylib */,
-				37B635A118349449006D15C0 /* libpcre.dylib */,
-				3710918717A9B8FB00BFAF43 /* Cocoa.framework */,
-				3710919D17A9B8FB00BFAF43 /* SenTestingKit.framework */,
-				3710918917A9B8FB00BFAF43 /* Other Frameworks */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3710918917A9B8FB00BFAF43 /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3710918A17A9B8FB00BFAF43 /* AppKit.framework */,
-				3710918B17A9B8FB00BFAF43 /* CoreData.framework */,
 				3710918C17A9B8FB00BFAF43 /* Foundation.framework */,
 			);
-			name = "Other Frameworks";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		3710918D17A9B8FB00BFAF43 /* GTWSWBase */ = {
@@ -208,6 +192,8 @@
 				371091BB17AA8D3400BFAF43 /* GTWLiteral.m */,
 				371091C217AA8D3500BFAF43 /* GTWVariable.h */,
 				371091C317AA8D3500BFAF43 /* GTWVariable.m */,
+				377C2B2C1835A8E000F4171E /* NSObject+GTWTerm.h */,
+				377C2B2D1835A8E000F4171E /* NSObject+GTWTerm.m */,
 			);
 			name = "Nodes and Terms";
 			sourceTree = "<group>";
@@ -265,6 +251,7 @@
 				37B6359F183493DD006D15C0 /* RegexKitLite.h in Headers */,
 				37F96DBA17ACF86700235009 /* GTWBlockEnumerator.h in Headers */,
 				371091D617AA8D3500BFAF43 /* GTWTriple.h in Headers */,
+				377C2B2E1835A8E000F4171E /* NSObject+GTWTerm.h in Headers */,
 				3786AA2017F0F686008663E9 /* GTWGraphIsomorphism.h in Headers */,
 				37C4DA481821F71100F31863 /* GTWSPARQLResultsJSONParser.h in Headers */,
 				371391D1180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h in Headers */,
@@ -349,6 +336,7 @@
 				371091DA17AA8D3500BFAF43 /* GTWVariable.m in Sources */,
 				3786AA2117F0F686008663E9 /* GTWGraphIsomorphism.m in Sources */,
 				37F96DBB17ACF86700235009 /* GTWBlockEnumerator.m in Sources */,
+				377C2B2F1835A8E000F4171E /* NSObject+GTWTerm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

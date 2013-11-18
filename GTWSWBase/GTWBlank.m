@@ -68,8 +68,4 @@
     return [self.value hash];
 }
 
-- (BOOL) effectiveBooleanValueWithError: (NSError**) error {
-    return NO;
-}
-
 @end

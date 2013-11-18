@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSObject+GTWTerm.h"
 
 @protocol GTWRewriteable <NSObject>
 - (id) copyReplacingValues: (NSDictionary*) map;
@@ -79,9 +80,9 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 /**
  @return @c YES if the RDF Term is a recognized XSD numeric type. @c FALSE otherwise.
  */
-- (BOOL) isNumeric;
-- (BOOL) isDouble;
-- (BOOL) isInteger;
+- (BOOL) isNumericLiteral;
+- (BOOL) isDoubleLiteral;
+- (BOOL) isIntegerLiteral;
 
 /**
  @return @c YES if the RDF Term is a xsd:boolean literal and true. @c NO otherwise.
