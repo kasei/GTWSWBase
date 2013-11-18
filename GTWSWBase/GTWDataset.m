@@ -57,4 +57,14 @@
     }
 }
 
+- (NSString*) description {
+    NSMutableString* s  = [NSMutableString stringWithFormat:@"GTWDataset"];
+    if (self.availabilityType == GTWRestrictedDataset) {
+        [s appendFormat:@"(Restricted)"];
+    }
+    NSString* graphs    = [[self defaultGraphs] componentsJoinedByString:@", "];
+    [s appendFormat:@"[%@]", graphs];
+    return [s copy];
+}
+
 @end
