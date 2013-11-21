@@ -137,8 +137,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 @end
 
 
-
-@protocol GTWDataSource <NSObject>
+@protocol GTWPlugin <NSObject>
 /**
  @return
  The API version number implemented by the data source.
@@ -146,11 +145,20 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 + (unsigned)interfaceVersion;
 
 /**
+ A dictionary mapping plugin class objects to a set of protocols that are implemented by that class.
+ */
++ (NSDictionary*) classesImplementingProtocols;
+
+/**
  @return
- A set of @c Protocol objects that are implemented by the data source.
+ A set of @c Protocol objects that are implemented by the plugin.
  */
 + (NSSet*) implementedProtocols;
 
+@end
+
+
+@protocol GTWDataSource <NSObject,GTWPlugin>
 /**
  @param dictionary
  A dictionary containing data source specific initialization information.
@@ -163,6 +171,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
  to @c initWithDictionary: in order to properly initialize the data source.
  */
 + (NSString*)usage;
+
 @end
 
 
@@ -613,9 +622,20 @@ typedef NS_ENUM(NSInteger, GTWType) {
 @end
 
 @protocol GTWParser <NSObject>
+- (id<GTWParser>) initWithData: (NSData*) data base: (id<GTWIRI>) base;
++ (NSSet*) handledMediaTypes;
++ (NSSet*) handledFileExtensions;
 @end
 
 @protocol GTWSPARQLResultsParser <GTWParser>
 - (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set;
 @end
+
+#pragma mark -
+
+@protocol GTWRDFParser<GTWParser>
+@property (readwrite) id<GTWIRI> baseURI;
+- (BOOL) enumerateTriplesWithBlock: (void (^)(id<GTWTriple> t)) block error:(NSError **)error;
+@end
+
 

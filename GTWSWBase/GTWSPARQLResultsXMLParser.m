@@ -13,7 +13,35 @@
 
 @implementation GTWSPARQLResultsXMLParser
 
++ (NSSet*) handledMediaTypes {
+    return [NSSet setWithObjects:@"application/sparql-results+xml", nil];
+}
+
++ (NSSet*) handledFileExtensions {
+    return [NSSet setWithObjects:@".srx", @".xml", nil];
+}
+
++ (unsigned)interfaceVersion {
+    return 0;
+}
+
++ (NSDictionary*) classesImplementingProtocols {
+    return @{ (id)self: [self implementedProtocols] };
+}
+
++ (NSSet*) implementedProtocols {
+    return [NSSet setWithObjects:@protocol(GTWSPARQLResultsParser), nil];
+}
+
+- (GTWSPARQLResultsXMLParser*) initWithData: (NSData*) data base: (GTWIRI*) base {
+    if (self = [self init]) {
+        self.data   = data;
+    }
+    return self;
+}
+
 - (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set {
+    self.data   = data;
     NSXMLParser * parser = [[NSXMLParser alloc] initWithData:data];
     [parser setDelegate:self];
     self.variables  = set;

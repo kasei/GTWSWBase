@@ -13,6 +13,33 @@
 
 @implementation GTWSPARQLResultsJSONParser
 
++ (NSSet*) handledMediaTypes {
+    return [NSSet setWithObjects:@"application/sparql-results+json", nil];
+}
+
++ (NSSet*) handledFileExtensions {
+    return [NSSet setWithObjects:@".srj", @".json", nil];
+}
+
++ (unsigned)interfaceVersion {
+    return 0;
+}
+
++ (NSDictionary*) classesImplementingProtocols {
+    return @{ (id)self: [self implementedProtocols] };
+}
+
++ (NSSet*) implementedProtocols {
+    return [NSSet setWithObjects:@protocol(GTWSPARQLResultsParser), nil];
+}
+
+- (GTWSPARQLResultsJSONParser*) initWithData: (NSData*) data base: (GTWIRI*) base {
+    if (self = [self init]) {
+        self.data   = data;
+    }
+    return self;
+}
+
 - (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set {
     NSError* error  = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];

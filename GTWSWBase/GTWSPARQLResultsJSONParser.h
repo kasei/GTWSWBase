@@ -11,4 +11,6 @@
 
 @interface GTWSPARQLResultsJSONParser : NSObject<GTWSPARQLResultsParser>
 
+@property (retain) NSData* data;
+
 @end
