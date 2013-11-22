@@ -483,6 +483,34 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 - (id<GTWTerm>) anyObjectForSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p graph: (id<GTWTerm>) g;
 @end
 
+@protocol GTWMutableModel <NSObject>
+/**
+ @param q
+ A id<GTWQuad> object to add to the quad store.
+ 
+ @param error
+ A pointer to an error object that is set if the addition fails.
+ 
+ */
+
+- (BOOL) addQuad: (id<GTWQuad>) q error:(NSError **)error;
+
+/**
+ @param q
+ A id<GTWQuad> object to remove from the quad store.
+ 
+ @param error
+ A pointer to an error object that is set if the addition fails.
+ 
+ */
+- (BOOL) removeQuad: (id<GTWQuad>) q error:(NSError **)error;
+
+- (BOOL) createGraph: (id<GTWIRI>) graph error:(NSError **)error;
+- (BOOL) dropGraph: (id<GTWIRI>) graph error:(NSError **)error;
+- (BOOL) clearGraph: (id<GTWIRI>) graph error:(NSError **)error;
+
+@end
+
 #pragma mark -
 
 @protocol GTWDataset <NSObject>
