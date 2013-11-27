@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "NSObject+GTWTerm.h"
 
+typedef NS_ENUM(NSInteger, GTWDatasetAvailability) {
+    GTWFullDataset,
+    GTWRestrictedDataset
+};
+
+
+
 @protocol GTWRewriteable <NSObject>
 - (id) copyReplacingValues: (NSDictionary*) map;
 - (id) copyWithCanonicalization;
@@ -115,16 +122,17 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
  @return An array of the subject, predicate, and object RDF Term objects.
  */
 - (NSArray*) allValues;
+
+/**
+ @return @c YES is the triple's subject, predicate, and object values are all either IRIs, Literals, or Blanks (not Variables). @c NO otherwise.
+ */
+- (BOOL) isGround;
 @end
 
 @protocol GTWTriple <GTWStatement,NSCopying>
 @property id<GTWTerm> subject;
 @property id<GTWTerm> predicate;
 @property id<GTWTerm> object;
-/**
- @return @c YES is the triple's subject, predicate, and object values are all either IRIs, Literals, or Blanks (not Variables). @c NO otherwise.
- */
-- (BOOL) isGround;
 @end
 
 
@@ -514,6 +522,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 #pragma mark -
 
 @protocol GTWDataset <NSObject>
+@property GTWDatasetAvailability availabilityType;
 - (NSArray*) defaultGraphs;
 - (NSArray*) availableGraphsFromModel: (id<GTWModel>) model;
 @end

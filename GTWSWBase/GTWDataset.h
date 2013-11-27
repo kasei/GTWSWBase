@@ -3,11 +3,6 @@
 
 @interface GTWDataset : NSObject<GTWDataset>
 
-typedef NS_ENUM(NSInteger, GTWDatasetAvailability) {
-    GTWFullDataset,
-    GTWRestrictedDataset
-};
-
 @property GTWDatasetAvailability availabilityType;
 @property NSMutableArray* defaultGraphsStack;
 @property NSArray* graphs;

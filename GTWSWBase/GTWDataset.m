@@ -4,7 +4,16 @@
 @implementation GTWDataset
 
 + (GTWDataset*) datasetFromDataset: (GTWDataset*) dataset withDefaultGraphs: (NSArray*) defaultGraphs {
-    GTWDataset* ds  = [[self alloc] initDatasetWithDefaultGraphs: defaultGraphs];
+    NSArray* dg;
+    if (dataset.availabilityType == GTWRestrictedDataset) {
+        NSMutableSet* set   = [NSMutableSet setWithArray:[dataset defaultGraphs]];
+        NSSet* newSet       = [NSSet setWithArray:defaultGraphs];
+        [set intersectSet:newSet];
+        dg  = [set allObjects];
+    } else {
+        dg  = defaultGraphs;
+    }
+    GTWDataset* ds  = [[self alloc] initDatasetWithDefaultGraphs: dg];
     ds.availabilityType = dataset.availabilityType;
     ds.graphs           = dataset.graphs;
     return ds;
