@@ -568,7 +568,12 @@ typedef NS_ENUM(NSInteger, GTWType) {
 //                                    MAP_ENUM_TO_STRING(GTWTypeBytes),
 //};
 
+@protocol GTWSerializerDelegate <NSObject>
+- (NSString*) stringFromObject: (id) object;
+@end
+
 @protocol GTWSerializer <NSObject>
+@property id<GTWSerializerDelegate> delegate;
 @end
 
 @protocol GTWTriplesSerializer <GTWSerializer>
