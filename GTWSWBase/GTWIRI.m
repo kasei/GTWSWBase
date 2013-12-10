@@ -32,19 +32,23 @@
             return nil;
         }
         
-        IRI* bi = base ? [[IRI alloc] initWithValue:base.value relativeToIRI:nil] : nil;
+        IRI* bi = base.iri;
         IRI* i  = [[IRI alloc] initWithValue:iri relativeToIRI:bi];
+        _iri    = i;
         self.value  = [i absoluteString];
         
-//        NSURL* baseurl  = [[NSURL alloc] initWithString:baseuri];
-//        NSURL* url  = [[NSURL alloc] initWithString:iri relativeToURL:baseurl];
-//        self.value  = [url absoluteString];
         if (!self.value) {
             NSLog(@"failed to create IRI: <%@> with base %@", iri, base);
             return nil;
         }
     }
     return self;
+}
+
+- (IRI*) iri {
+    if (!_iri)
+        _iri    = [[IRI alloc] initWithValue:self.value relativeToIRI:nil];
+    return _iri;
 }
 
 - (GTWIRI*) initWithValue: (NSString*) iri relativeToIRI: (GTWIRI*) base {

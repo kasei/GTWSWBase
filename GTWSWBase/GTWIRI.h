@@ -1,6 +1,8 @@
 #import "GTWSWBase.h"
 
-@interface GTWIRI : NSObject<GTWIRI, GTWRewriteable, NSCopying>
+@interface GTWIRI : NSObject<GTWIRI, GTWRewriteable, NSCopying> {
+    id _iri;
+}
 
 @property (retain, readwrite) NSString* value;
 
