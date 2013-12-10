@@ -241,7 +241,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				371091E517AA90EA00BFAF43 /* GTWSWBase.h in Headers */,
-				37B6359718343CB5006D15C0 /* IRI.h in Headers */,
 				371091D017AA8D3500BFAF43 /* GTWModelBase.h in Headers */,
 				371091C417AA8D3500BFAF43 /* GTWBlank.h in Headers */,
 				371091C717AA8D3500BFAF43 /* GTWDataset.h in Headers */,
@@ -256,6 +255,7 @@
 				37C4DA481821F71100F31863 /* GTWSPARQLResultsJSONParser.h in Headers */,
 				371391D1180DC74E002D0535 /* GTWSPARQLResultsXMLParser.h in Headers */,
 				371091D917AA8D3500BFAF43 /* GTWVariable.h in Headers */,
+				37B6359718343CB5006D15C0 /* IRI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

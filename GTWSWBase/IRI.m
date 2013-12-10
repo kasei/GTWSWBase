@@ -70,8 +70,8 @@
             [iri appendString:components[@"fragment"]];
         }
         
-        _components = [components copy];
-        _iriString  = [iri copy];
+        _components = components;
+        _iriString  = iri;
         _baseIRI    = nil;
     }
     return self;
@@ -80,8 +80,8 @@
 - (IRI*) initWithValue: (NSString*) iri relativeToIRI: (IRI*) base {
     if (self = [self init]) {
 //        NSLog(@"Initializing IRI <%@> relative to base %@", iri, base);
-        _iriString  = [iri copy];
-        _baseIRI    = base ? [base copy] : nil;
+        _iriString  = iri;
+        _baseIRI    = base ? base : nil;
         NSError* error;
         [self parseWithError:&error];
 //        NSLog(@"in-flight init components for %@: %@", iri, _components);
@@ -91,6 +91,7 @@
         }
         
         if (base && !_components[@"scheme"]) {
+            NSLog(@"making absolute: %@", _iriString);
             _iriString  = [self absoluteString];
         }
         
@@ -321,7 +322,7 @@
         if (!dict[@"path"]) {
             NSMutableDictionary* d  = [NSMutableDictionary dictionaryWithDictionary:dict];
             d[@"path"]  = @"";  // All IRIs have a path, even if it's empty
-            dict        = [d copy];
+            dict    = d;
         }
         
         if (*error)
@@ -363,7 +364,7 @@
         [dict addEntriesFromDictionary:frag];
     }
     
-    return [dict copy];
+    return dict;
 }
 
 //irelative-ref  = irelative-part [ "?" iquery ] [ "#" ifragment ]
@@ -382,7 +383,7 @@
         [dict addEntriesFromDictionary:frag];
     }
     
-    return [dict copy];
+    return dict;
 }
 
 //ihier-part     = "//" iauthority ipath-abempty
@@ -390,7 +391,7 @@
 //  / ipath-rootless
 //  / ipath-empty
 - (NSDictionary*) parse_ihier_part: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ipchar_re = @"(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])";
+    static NSString* ipchar_re = @"(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])";
     if ([iri hasPrefix:@"//"]) {
         [iri replaceCharactersInRange:NSMakeRange(0, 2) withString:@""];
         NSDictionary* auth  = [self parse_iauthority:iri asComponentsWithError:error];
@@ -399,7 +400,7 @@
         if (!path) return nil;
         NSMutableDictionary* dict  = [NSMutableDictionary dictionaryWithDictionary:auth];
         [dict addEntriesFromDictionary:path];
-        return [dict copy];
+        return dict;
     } else if ([iri hasPrefix:@"/"]) {
         return [self parse_ipath_absolute:iri asComponentsWithError:error];
     } else if ([iri rangeOfRegex:ipchar_re].location == 0) {
@@ -417,7 +418,7 @@
 // / ipath-noscheme
 // / ipath-empty
 - (NSDictionary*) parse_irelative_part: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ipchar_re = @"(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])";
+    static NSString* ipchar_re = @"(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])";
     if ([iri hasPrefix:@"//"]) {
         [iri replaceCharactersInRange:NSMakeRange(0, 2) withString:@""];
         NSDictionary* auth  = [self parse_iauthority:iri asComponentsWithError:error];
@@ -426,7 +427,7 @@
         if (!path) return nil;
         NSMutableDictionary* dict  = [NSMutableDictionary dictionaryWithDictionary:auth];
         [dict addEntriesFromDictionary:path];
-        return [dict copy];
+        return dict;
     } else if ([iri hasPrefix:@"/"]) {
         return [self parse_ipath_absolute:iri asComponentsWithError:error];
     } else if ([iri rangeOfRegex:ipchar_re].location == 0) {
@@ -441,7 +442,7 @@
 
 //iquery         = *( ipchar / iprivate / "/" / "?" )
 - (NSDictionary*) parse_iquery: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* iquery_re = @"((?:[/?]|(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])|(?:(?:\\x{E000}-\\x{F8FF})|(?:\\x{F0000}-\\x{FFFFD})|(?:\\x{100000}-\\x{10FFFD})))*)";
+    static NSString* iquery_re = @"((?:[/?]|(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])|(?:(?:\\x{E000}-\\x{F8FF})|(?:\\x{F0000}-\\x{FFFFD})|(?:\\x{100000}-\\x{10FFFD})))*)";
     NSRange range   = [iri rangeOfRegex:iquery_re];
     if (range.location == 0) {
         NSString* query = [iri substringWithRange:NSMakeRange(0, range.length)];
@@ -454,7 +455,7 @@
 
 //ifragment      = *( ipchar / "/" / "?" )
 - (NSDictionary*) parse_ifragment: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ifragment_re = @"((?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])|[/?])*)";
+    static NSString* ifragment_re = @"((?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])|[/?])*)";
     NSRange range   = [iri rangeOfRegex:ifragment_re];
     if (range.location == 0) {
         NSString* query = [iri substringWithRange:NSMakeRange(0, range.length)];
@@ -469,8 +470,7 @@
 //iuserinfo      = *( iunreserved / pct-encoded / sub-delims / ":" )
 //ihost          = IP-literal / IPv4address / ireg-name
 - (NSDictionary*) parse_iauthority: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* userinfo_re    = @"((?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|:)*)@";
-    NSMutableDictionary* dict   = [NSMutableDictionary dictionary];
+    static NSString* userinfo_re    = @"((?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|:)*)@";
     NSRange range;
     
     NSMutableDictionary* authority  = [NSMutableDictionary dictionary];
@@ -492,13 +492,12 @@
         [iri replaceCharactersInRange:range withString:@""];
     }
     
-    dict[@"authority"]  = authority;
-    return [dict copy];
+    return @{@"authority": authority};
 }
 
 //ipath-abempty  = *( "/" isegment )
 - (NSDictionary*) parse_ipath_abempty: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ipath_re     = @"(?:(?:/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+)*)*)";
+    static NSString* ipath_re     = @"(?:(?:/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+)*)*)";
     NSRange range    = [iri rangeOfRegex:ipath_re];
     if (range.location == 0) {
         NSString* path  = [iri substringWithRange:range];
@@ -511,7 +510,7 @@
 
 //ipath-absolute = "/" [ isegment-nz *( "/" isegment ) ]
 - (NSDictionary*) parse_ipath_absolute: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ipath_absolute_re = @"(/((?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+)(/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+))*)?)";
+    static NSString* ipath_absolute_re = @"(/((?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+)(/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+))*)?)";
     NSRange range    = [iri rangeOfRegex:ipath_absolute_re];
     if (range.location == 0) {
         NSString* path  = [iri substringWithRange:range];
@@ -524,7 +523,7 @@
 
 //ipath-rootless = isegment-nz *( "/" isegment )
 - (NSDictionary*) parse_ipath_rootless: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ipath_absolute_re = @"((?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+)(/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+))*)";
+    static NSString* ipath_absolute_re = @"((?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+)(/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+))*)";
     NSRange range    = [iri rangeOfRegex:ipath_absolute_re];
     if (range.location == 0) {
         NSString* path  = [iri substringWithRange:range];
@@ -537,24 +536,28 @@
 
 //ihost          = IP-literal / IPv4address / ireg-name
 - (NSDictionary*) parse_ihost: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ip_literal_re     = @"(?:\\[(?:(?:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:[A-Fa-f0-9]{1,4}::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,1}::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,2}::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,3}::[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,4}::(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,5}::[A-Fa-f0-9]{1,4})|(?:(?:[A-Fa-f0-9]{1,4}:){,6}::))|(?:v[A-Fa-f0-9]{1,}[.](?:(?:[-A-Za-z0-9._~])|(?:[!$&'()*+,;=])|:){1,}))\\])";
-    NSString* IPv4address_re    = @"(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))";
-    NSString* ireg_name_re      = @"(?:((?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=]))*)";
+    static NSString* ip_literal_re     = @"(?:\\[(?:(?:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:[A-Fa-f0-9]{1,4}::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,1}::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,2}::[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,3}::[A-Fa-f0-9]{1,4}:(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,4}::(?:[A-Fa-f0-9]{1,4}:[A-Fa-f0-9]{1,4}|(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))))|(?:(?:[A-Fa-f0-9]{1,4}:){,5}::[A-Fa-f0-9]{1,4})|(?:(?:[A-Fa-f0-9]{1,4}:){,6}::))|(?:v[A-Fa-f0-9]{1,}[.](?:(?:[-A-Za-z0-9._~])|(?:[!$&'()*+,;=])|:){1,}))\\])";
+    static NSString* IPv4address_re    = @"(?:(?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5]))[.](?:[0-9]|(?:[1-9][0-9])|(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])))";
+    static NSString* ireg_name_re      = @"(?:((?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=]))*)";
     NSRange ip_lit_range    = [iri rangeOfRegex:ip_literal_re];
-    NSRange ipv4_range      = [iri rangeOfRegex:IPv4address_re];
-    NSRange name_range      = [iri rangeOfRegex:ireg_name_re];
     if (ip_lit_range.location == 0) {
         NSString* host  = [iri substringWithRange:ip_lit_range];
         [iri replaceCharactersInRange:ip_lit_range withString:@""];
         return @{@"host": host};
-    } else if (ipv4_range.location == 0) {
-        NSString* host  = [iri substringWithRange:ipv4_range];
-        [iri replaceCharactersInRange:ipv4_range withString:@""];
-        return @{@"host": host};
-    } else if (name_range.location == 0) {
-        NSString* host  = [iri substringWithRange:name_range];
-        [iri replaceCharactersInRange:name_range withString:@""];
-        return @{@"host": host};
+    } else {
+        NSRange ipv4_range      = [iri rangeOfRegex:IPv4address_re];
+        if (ipv4_range.location == 0) {
+            NSString* host  = [iri substringWithRange:ipv4_range];
+            [iri replaceCharactersInRange:ipv4_range withString:@""];
+            return @{@"host": host};
+        } else {
+            NSRange name_range      = [iri rangeOfRegex:ireg_name_re];
+            if (name_range.location == 0) {
+                NSString* host  = [iri substringWithRange:name_range];
+                [iri replaceCharactersInRange:name_range withString:@""];
+                return @{@"host": host};
+            }
+        }
     }
     *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ihost: %@", iri]}];
     return nil;
@@ -562,7 +565,7 @@
 
 //ipath-noscheme = isegment-nz-nc *( "/" isegment )
 - (NSDictionary*) parse_ipath_noscheme: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
-    NSString* ipath_re  = @"(?:(?:(?:@|(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=]))+)(/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+))*)";
+    static NSString* ipath_re  = @"(?:(?:(?:@|(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=]))+)(/(?:(?:(?:[-A-Za-z0-9._~]|(?:[\\x{00A0}-\\x{D7FF}]|[\\x{F900}-\\x{FDCF}]|[\\x{FDF0}-\\x{FFEF}]|[\\x{10000}-\\x{1FFFD}]|[\\x{20000}-\\x{2FFFD}]|[\\x{30000}-\\x{3FFFD}]|[\\x{40000}-\\x{4FFFD}]|[\\x{50000}-\\x{5FFFD}]|[\\x{60000}-\\x{6FFFD}]|[\\x{70000}-\\x{7FFFD}]|[\\x{80000}-\\x{8FFFD}]|[\\x{90000}-\\x{9FFFD}]|[\\x{A0000}-\\x{AFFFD}]|[\\x{B0000}-\\x{BFFFD}]|[\\x{C0000}-\\x{CFFFD}]|[\\x{D0000}-\\x{DFFFD}]|[\\x{E1000}-\\x{EFFFD}]))|(?:%[A-Fa-f0-9]{2})|(?:[!$&'()*+,;=])|[:@])+))*)";
     NSRange range    = [iri rangeOfRegex:ipath_re];
     if (range.location == 0) {
         NSString* path  = [iri substringWithRange:range];
