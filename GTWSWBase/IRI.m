@@ -91,7 +91,7 @@
         }
         
         if (base && !_components[@"scheme"]) {
-            NSLog(@"making absolute: %@", _iriString);
+//            NSLog(@"making absolute: %@", _iriString);
             _iriString  = [self absoluteString];
         }
         
