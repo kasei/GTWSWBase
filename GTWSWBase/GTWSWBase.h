@@ -231,6 +231,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 @optional
 - (NSEnumerator*) tripleEnumeratorMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o error:(NSError **)error;
 - (NSString*) etagForTriplesMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o error:(NSError **)error;
+- (NSDate*) lastModifiedDateForTriplesMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o error:(NSError **)error;
 - (NSUInteger) countTriplesMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o error:(NSError **)error;
 @end
 
@@ -266,7 +267,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 
  @return An array of all graph terms that exist in the quad store.
  */
-- (NSArray*) getGraphsWithOutError:(NSError **)error;
+- (NSArray*) getGraphsWithError:(NSError **)error;
 
 /**
  @param block
@@ -330,7 +331,8 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 - (NSEnumerator*) quadEnumeratorMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error;
 - (BOOL) addIndexType: (NSString*) type value: (NSArray*) positions synchronous: (BOOL) sync error: (NSError**) error;
 - (NSString*) etagForQuadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error;
-- (NSUInteger) countGraphsWithOutError:(NSError **)error;
+- (NSDate*) lastModifiedDateForQuadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error;
+- (NSUInteger) countGraphsWithError:(NSError **)error;
 - (NSUInteger) countQuadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error;
 @end
 
