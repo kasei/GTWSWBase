@@ -13,7 +13,7 @@
 
 @implementation GTWSPARQLResultsXMLParser
 
-+ (NSSet*) handledMediaTypes {
++ (NSSet*) handledParserMediaTypes {
     return [NSSet setWithObjects:@"application/sparql-results+xml", nil];
 }
 

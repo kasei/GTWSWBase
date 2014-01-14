@@ -669,7 +669,7 @@ typedef NS_ENUM(NSInteger, GTWType) {
 
 @protocol GTWParser <NSObject>
 - (id<GTWParser>) initWithData: (NSData*) data base: (id<GTWIRI>) base;
-+ (NSSet*) handledMediaTypes;
++ (NSSet*) handledParserMediaTypes;
 + (NSSet*) handledFileExtensions;
 @end
 
