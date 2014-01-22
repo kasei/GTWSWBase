@@ -493,6 +493,9 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 - (id<GTWTerm>) anyObjectForSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p graph: (id<GTWTerm>) g;
 
 - (NSDate*) lastModifiedDateForQuadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error;
+
+- (NSUInteger) countQuadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error;
+
 @end
 
 @protocol GTWMutableModel <NSObject>
@@ -578,6 +581,8 @@ typedef NS_ENUM(NSInteger, GTWType) {
 
 @protocol GTWSerializer <NSObject>
 @property id<GTWSerializerDelegate> delegate;
++ (NSSet*) handledSerializerMediaTypes;
++ (NSString*) preferredMediaTypes;
 @end
 
 @protocol GTWTriplesSerializer <GTWSerializer>

@@ -71,4 +71,14 @@
     @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)] userInfo:nil];
 }
 
+- (NSUInteger) countQuadsMatchingSubject: (id<GTWTerm>) s predicate: (id<GTWTerm>) p object: (id<GTWTerm>) o graph: (id<GTWTerm>) g error:(NSError **)error {
+    __block NSUInteger count = 0;
+    [self enumerateBindingsMatchingSubject:s predicate:p object:o graph:g usingBlock:^(NSDictionary *q) {
+        count++;
+    } error:error];
+    return count;
+}
+
+
+
 @end
