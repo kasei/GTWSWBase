@@ -342,7 +342,9 @@
 - (NSDictionary*) parse_IRI: (NSMutableString*) iri asComponentsWithError: (NSError**) error {
     NSRange range   = [iri rangeOfRegex:@"([A-Za-z][-A-Za-z0-9+.]*):"];
     if (range.location == NSNotFound) {
-        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:3 userInfo:@{@"description": @"Scheme not found in IRI", @"iri": iri}];
+        if (error) {
+            *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:3 userInfo:@{@"description": @"Scheme not found in IRI", @"iri": iri}];
+        }
         return nil;
     }
     NSMutableDictionary* dict   = [NSMutableDictionary dictionary];
@@ -449,7 +451,9 @@
         [iri replaceCharactersInRange:range withString:@""];
         return @{@"query": query};
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"unexpected content in parse_iquery: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"unexpected content in parse_iquery: %@", iri]}];
+    }
     return nil;
 }
 
@@ -462,7 +466,9 @@
         [iri replaceCharactersInRange:range withString:@""];
         return @{@"fragment": query};
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"unexpected content in parse_ifragment: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"unexpected content in parse_ifragment: %@", iri]}];
+    }
     return nil;
 }
 
@@ -504,7 +510,9 @@
         [iri replaceCharactersInRange:range withString:@""];
         return @{@"path": path};
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_abempty: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_abempty: %@", iri]}];
+    }
     return nil;
 }
 
@@ -517,7 +525,9 @@
         [iri replaceCharactersInRange:range withString:@""];
         return @{@"path": path};
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_absolute: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_absolute: %@", iri]}];
+    }
     return nil;
 }
 
@@ -530,7 +540,9 @@
         [iri replaceCharactersInRange:range withString:@""];
         return @{@"path": path};
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_rootless: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_rootless: %@", iri]}];
+    }
     return nil;
 }
 
@@ -559,7 +571,9 @@
             }
         }
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ihost: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ihost: %@", iri]}];
+    }
     return nil;
 }
 
@@ -572,7 +586,9 @@
         [iri replaceCharactersInRange:range withString:@""];
         return @{@"path": path};
     }
-    *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_noscheme: %@", iri]}];
+    if (error) {
+        *error  = [NSError errorWithDomain:@"us.kasei.swbase.iri" code:2 userInfo:@{@"description": [NSString stringWithFormat:@"Unexpected content in parse_ipath_noscheme: %@", iri]}];
+    }
     return nil;
 }
 
