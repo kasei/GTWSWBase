@@ -49,6 +49,7 @@ typedef NS_ENUM(NSInteger, GTWTermType) {
 - (NSString*) value;
 
 - (NSComparisonResult)compare:(id<GTWTerm>)term;
+- (NSComparisonResult)compare:(id<GTWTerm>)term reverse:(BOOL)reverseFlag;
 @optional
 /**
  @return The language tag of the RDF Term.

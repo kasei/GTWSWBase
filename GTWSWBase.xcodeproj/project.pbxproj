@@ -286,6 +286,7 @@
 		3710917B17A9B8FB00BFAF43 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = GTW;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Gregory Todd Williams";
 			};
@@ -424,7 +425,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_LOCATION = NO;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -443,7 +444,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_LOCATION = NO;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

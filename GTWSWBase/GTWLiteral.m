@@ -230,6 +230,18 @@
     }
 }
 
+- (NSComparisonResult)compare:(id<GTWTerm>)term reverse:(BOOL)reverseFlag {
+    NSComparisonResult r = [self compare:term];
+    if (reverseFlag) {
+        if (r == NSOrderedDescending) {
+            r   = NSOrderedAscending;
+        } else if (r == NSOrderedAscending) {
+            r   = NSOrderedDescending;
+        }
+    }
+    return r;
+}
+
 - (NSComparisonResult)compare:(id<GTWTerm>)term {
     if (!term)
         return NSOrderedDescending;
@@ -258,7 +270,7 @@
                 return cmp;
             
             if ([self.datatype isEqualToString:@"http://www.w3.org/2001/XMLSchema#date"]) {
-                NSLog(@"comparing typed literal: %@ %@", self, term);
+//                NSLog(@"comparing typed literal: %@ %@", self, term);
                 if ([self isValidXSDDate] && [(GTWLiteral*)literal isValidXSDDate]) {
                     NSDictionary* thisDate = [self xsdDateComponents];
                     NSDictionary* thatDate  = [(GTWLiteral*)literal xsdDateComponents];
