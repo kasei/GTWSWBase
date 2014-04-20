@@ -212,8 +212,8 @@ BOOL constructPermutation (NSMutableIndexSet* set, int* map, int current, unsign
         //        }
         //        fprintf(stderr, "\n");
         return block(a);
-        
     });
+    free(indexes);
     return;
 }
 
