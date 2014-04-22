@@ -44,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		3710918417A9B8FB00BFAF43 /* GTWSWBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GTWSWBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3710918C17A9B8FB00BFAF43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3710918F17A9B8FB00BFAF43 /* GTWSWBase-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GTWSWBase-Info.plist"; sourceTree = "<group>"; };
 		3710919117A9B8FB00BFAF43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3710919317A9B8FB00BFAF43 /* GTWSWBase-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTWSWBase-Prefix.pch"; sourceTree = "<group>"; };
@@ -120,7 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				37B635A31834946E006D15C0 /* libicucore.dylib */,
-				3710918C17A9B8FB00BFAF43 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -433,7 +431,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GTWSWBase/GTWSWBase-Prefix.pch";
 				INFOPLIST_FILE = "GTWSWBase/GTWSWBase-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -452,7 +451,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GTWSWBase/GTWSWBase-Prefix.pch";
 				INFOPLIST_FILE = "GTWSWBase/GTWSWBase-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/$(EXECUTABLE_PATH)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
