@@ -11,6 +11,7 @@
 
 @interface GTWSPARQLResultsXMLParser : NSObject<GTWSPARQLResultsParser, NSXMLParserDelegate>
 
+@property (retain) NSError* parseError;
 @property (retain) NSMutableSet* variables;
 @property (retain) NSMutableDictionary* result;
 @property (retain) NSMutableArray* results;

@@ -681,6 +681,7 @@ typedef NS_ENUM(NSInteger, GTWType) {
 
 @protocol GTWSPARQLResultsParser <GTWParser>
 - (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set;
+- (BOOL) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set withBlock: (void (^)(NSDictionary*)) block error:(NSError**)error;
 @end
 
 #pragma mark -

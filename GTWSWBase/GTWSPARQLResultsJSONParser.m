@@ -40,6 +40,14 @@
     return self;
 }
 
+- (BOOL) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set withBlock: (void (^)(NSDictionary*)) block error:(NSError**)error {
+    NSEnumerator* e = [self parseResultsFromData:data settingVariables:set];
+    for (NSDictionary* r in e) {
+        block(r);
+    }
+    return YES;
+}
+
 - (NSEnumerator*) parseResultsFromData: (NSData*) data settingVariables: (NSMutableSet*) set {
     NSError* error  = nil;
     id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
