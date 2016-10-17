@@ -53,7 +53,9 @@
         block(r);
     }
     if (self.parseError) {
-        *error = self.parseError;
+        if (error) {
+            *error = self.parseError;
+        }
         return NO;
     } else {
         return YES;
