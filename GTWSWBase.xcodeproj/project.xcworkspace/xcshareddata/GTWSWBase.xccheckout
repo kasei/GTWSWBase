@@ -10,29 +10,29 @@
 	<string>GTWSWBase</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>5A25940C-B712-4555-89A6-ED5944637937</key>
-		<string>ssh://github.com/kasei/GTWSWBase.git</string>
+		<key>A7C2611983876B498EEEE6B6365C78E02E4BC06D</key>
+		<string>github.com:kasei/GTWSWBase.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>GTWSWBase.xcodeproj/project.xcworkspace</string>
+	<string>GTWSWBase.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>5A25940C-B712-4555-89A6-ED5944637937</key>
+		<key>A7C2611983876B498EEEE6B6365C78E02E4BC06D</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/kasei/GTWSWBase.git</string>
+	<string>github.com:kasei/GTWSWBase.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>5A25940C-B712-4555-89A6-ED5944637937</string>
+	<string>A7C2611983876B498EEEE6B6365C78E02E4BC06D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>5A25940C-B712-4555-89A6-ED5944637937</string>
+			<string>A7C2611983876B498EEEE6B6365C78E02E4BC06D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>GTWSWBase</string>
 		</dict>
