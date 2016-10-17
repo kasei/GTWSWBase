@@ -54,7 +54,7 @@ static NSString* INTEGER_PATTERN    = @"http://www.w3.org/2001/XMLSchema#(byte|i
         id<GTWLiteral> term = (id<GTWLiteral>)self;
         if (![term isIntegerLiteral])
             return NO;
-        NSRange range   = [self.value rangeOfString:@"([+]|-)?\\d+" options:NSRegularExpressionSearch];
+        NSRange range   = [term.value rangeOfString:@"([+]|-)?\\d+" options:NSRegularExpressionSearch];
         if (range.location == 0 && range.length == [term.value length]) {
             return YES;
         } else {
