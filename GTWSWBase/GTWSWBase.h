@@ -692,3 +692,17 @@ typedef NS_ENUM(NSInteger, GTWType) {
 @end
 
 
+
+#import "GTWBlank.h"
+#import "GTWIRI.h"
+#import "GTWLiteral.h"
+#import "GTWVariable.h"
+#import "GTWBlockEnumerator.h"
+#import "GTWDataset.h"
+#import "GTWGraphIsomorphism.h"
+#import "GTWModelBase.h"
+#import "GTWQuad.h"
+#import "GTWTriple.h"
+#import "GTWSPARQLResultsXMLParser.h"
+#import "GTWSPARQLResultsJSONParser.h"
+
